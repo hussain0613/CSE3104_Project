@@ -93,8 +93,8 @@ public class User {
             
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
-
-            String sql = "update \"user\" set name='" + name + "', email='" + email + "', username='" + username + "', password='" + password + "', role='" + role + "', status='" + status + "', modification_datetime='"+ dateFormat.format(date) + "' where id=" + id;
+            modification_datetime = dateFormat.format(date);
+            String sql = "update \"user\" set name='" + name + "', email='" + email + "', username='" + username + "', password='" + password + "', role='" + role + "', status='" + status + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
             DBConnector connector = new DBConnector();
             connector.createStatement().executeUpdate(sql);
         }

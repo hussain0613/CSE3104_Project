@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -49,14 +50,17 @@ public class Signup {
 
     }
 
-    public void login(Event event){
+    public void login(Event event) throws IOException{
         String username = login_username_field.getText();
         String pass = login_pass_field.getText();
 
         try {
             User user = User.get_by_username(username);
             if(user.get_password().equals(pass)){
-                msg_label.setText("Successfully logged in!");
+                // msg_label.setText("Successfully logged in!");
+                Profile profile = new Profile();
+                profile.current_user = user;
+                profile.start((Stage) ((Button) event.getSource()).getScene().getWindow());
             }
             else{
                 msg_label.setText("Wrong username or password");

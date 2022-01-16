@@ -9,7 +9,7 @@ public class DBConnector {
     String connectionString;
     Connection connection;
     public DBConnector() throws SQLException {
-        connectionString = "jdbc:sqlserver://localhost:1433;user=sa;password=p@ssword13;" + "databaseName=project_testdb2;";
+        connectionString = "jdbc:sqlserver://localhost:1433;user=sa;password=pass;" + "databaseName=project_testdb2;";
 
         
         DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());

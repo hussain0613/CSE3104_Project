@@ -7,12 +7,10 @@ import controllers.Signup;
 
 public class App extends Application {
 
-    Signup signup;
-
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        signup = new Signup();
+        Signup signup = new Signup();
         signup.start(primaryStage);
         // primaryStage.setTitle("Home");
         // primaryStage.show();
