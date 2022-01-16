@@ -123,6 +123,16 @@ public class User {
         return new User(id);
     }
 
+    public static User get_by_username(String username) throws SQLException{
+        String sql = "select * from \"user\" where username='" + username + "'";
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        User user = new User();
+        user.from_resultSet_To_User(resultSet);
+        return user;
+    }
+
     public static void create_table() throws SQLException{
         String sql = "create table \"user\"(" +
             "id int identity(1,1)," +
