@@ -1,0 +1,158 @@
+package models;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import utils.DBConnector;
+
+public class User {
+    DBConnector connector;
+
+    private int id;
+    public String name, email, username, role;
+    private String password;
+    public boolean status;
+
+    private String creation_datetime, modification_datetime;
+
+    public User(){
+        id = -1;
+        name = null;
+        email = null;
+        username = null;
+        password = null;
+        role = null;
+        status = false;
+        creation_datetime = null;
+        modification_datetime = null;
+    }
+
+    public User(int id) throws SQLException {
+        this.id = id;
+
+        sync(true);
+    }
+
+    public User(String name, String email, String username, String password, String role, boolean status){
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.password = password; // TODO: Encrypt password
+        this.role = role;
+        this.status = status;
+    }
+
+    public int get_id(){
+        return this.id;
+    }
+
+    public String get_password(){
+        return this.password;
+    }
+
+    public String get_creation_datetime(){
+        return this.creation_datetime;
+    }
+    public String get_modification_datetime(){
+        return this.modification_datetime;
+    }
+    
+
+    public void set_password(String password){
+        // encrypt password then set it
+        this.password = password;
+    }
+
+    public void insert() throws SQLException{
+        // need do something so that we can get the id of the newly created user and sync the object to the database
+
+        String sql = "insert into \"user\"(name, email, username, password, role, status) values('" + name + "', '" + email + "', '" + username + "', '" + password + "', '" + role + "', '" + status + "');";
+        DBConnector connector = new DBConnector();
+        
+        
+        connector.createStatement().executeUpdate(sql);
+    }
+
+    public void update() throws SQLException{
+        sync(false);
+    }
+
+    public void sync(boolean update_object) throws SQLException{
+        if(update_object){
+            String sql = "select * from \"user\"where id=" + id;
+            DBConnector connector = new DBConnector();
+            ResultSet resultSet = connector.createStatement().executeQuery(sql);
+            System.out.println(resultSet);
+            resultSet.next();
+            from_resultSet_To_User(resultSet);
+        }
+        else{
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+
+            String sql = "update \"user\" set name='" + name + "', email='" + email + "', username='" + username + "', password='" + password + "', role='" + role + "', status='" + status + "', modification_datetime='"+ dateFormat.format(date) + "' where id=" + id;
+            DBConnector connector = new DBConnector();
+            connector.createStatement().executeUpdate(sql);
+        }
+        
+    }
+
+    public void delete() throws SQLException{
+        String sql = "delete from \"user\" where id=" + id;
+        DBConnector connector = new DBConnector();
+        connector.createStatement().execute(sql);
+    }
+
+    private void from_resultSet_To_User(ResultSet resultSet) throws SQLException{
+        id = resultSet.getInt("id");
+        name = resultSet.getString("name");
+        email = resultSet.getString("email");
+        username = resultSet.getString("username");
+        password = resultSet.getString("password");
+        role = resultSet.getString("role");
+        status = resultSet.getBoolean("status");
+        creation_datetime = resultSet.getString("creation_datetime");
+        modification_datetime = resultSet.getString("modification_datetime");
+    }
+
+    public static User get_by_id(int id) throws SQLException{
+        return new User(id);
+    }
+
+    public static void create_table() throws SQLException{
+        String sql = "create table \"user\"(" +
+            "id int identity(1,1)," +
+            
+            "creation_datetime datetime constraint df_user_creation_datetime default getDate()," +
+            "modification_datetime datetime constraint df_user_modification_datetime default getDate(),"+
+            
+            "name varchar(50) not null," +
+            "email varchar(100) not null," +
+            "username varchar(20) not null," +
+            "\"password\" varchar(20) not null," +
+            "\"role\" nvarchar(20) constraint df_user_role default 'general'," +
+            "\"status\" bit constraint df_user_status default 1" +
+            
+            "constraint pk_user_id primary key(id), " +
+            "constraint chk_user_email check(email like '%_@%_.%_')," +
+            "constraint chk_user_username check(len(username) >= 4)," +
+            "constraint chk_user_password check(len(\"password\") >= 4)," +
+            "constraint uq_user_username unique(username)," +
+            "constraint uq_user_email unique(email)" +
+        ");";
+        
+        
+        DBConnector connector = new DBConnector();
+        connector.createStatement().execute(sql);
+    }
+
+    public static void drop_table() throws SQLException{
+        String sql = "drop table \"user\"";
+        DBConnector connector = new DBConnector();
+        connector.createStatement().execute(sql);
+    }
+}
