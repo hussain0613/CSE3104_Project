@@ -8,6 +8,8 @@ import java.util.Date;
 
 import utils.DBConnector;
 
+import java.io.IOException;
+
 public class User {
     DBConnector connector;
 
@@ -30,7 +32,7 @@ public class User {
         modification_datetime = null;
     }
 
-    public User(int id) throws SQLException {
+    public User(int id) throws SQLException, IOException{
         this.id = id;
 
         sync(true);
@@ -66,7 +68,7 @@ public class User {
         this.password = password;
     }
 
-    public void insert() throws SQLException{
+    public void insert() throws SQLException, IOException{
         // need do something so that we can get the id of the newly created user and sync the object to the database
 
         String sql = "insert into \"user\"(name, email, username, password, role, status) values('" + name + "', '" + email + "', '" + username + "', '" + password + "', '" + role + "', '" + status + "');";
@@ -76,11 +78,11 @@ public class User {
         connector.createStatement().executeUpdate(sql);
     }
 
-    public void update() throws SQLException{
+    public void update() throws SQLException, IOException{
         sync(false);
     }
 
-    public void sync(boolean update_object) throws SQLException{
+    public void sync(boolean update_object) throws SQLException, IOException{
         if(update_object){
             String sql = "select * from \"user\"where id=" + id;
             DBConnector connector = new DBConnector();
@@ -101,7 +103,7 @@ public class User {
         
     }
 
-    public void delete() throws SQLException{
+    public void delete() throws SQLException, IOException{
         String sql = "delete from \"user\" where id=" + id;
         DBConnector connector = new DBConnector();
         connector.createStatement().execute(sql);
@@ -119,11 +121,11 @@ public class User {
         modification_datetime = resultSet.getString("modification_datetime");
     }
 
-    public static User get_by_id(int id) throws SQLException{
+    public static User get_by_id(int id) throws SQLException, IOException{
         return new User(id);
     }
 
-    public static User get_by_username(String username) throws SQLException{
+    public static User get_by_username(String username) throws SQLException, IOException{
         String sql = "select * from \"user\" where username='" + username + "'";
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);
@@ -133,7 +135,7 @@ public class User {
         return user;
     }
 
-    public static void create_table() throws SQLException{
+    public static void create_table() throws SQLException, IOException{
         String sql = "create table \"user\"(" +
             "id int identity(1,1)," +
             
@@ -160,7 +162,7 @@ public class User {
         connector.createStatement().execute(sql);
     }
 
-    public static void drop_table() throws SQLException{
+    public static void drop_table() throws SQLException, IOException{
         String sql = "drop table \"user\"";
         DBConnector connector = new DBConnector();
         connector.createStatement().execute(sql);

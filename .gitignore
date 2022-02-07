@@ -2,6 +2,7 @@
 .vscode/
 bin/
 lib/
+*_settings.*
 
 # Compiled class file
 *.class

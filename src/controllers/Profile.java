@@ -78,7 +78,7 @@ public class Profile{
         confirm_password_field.setVisible(editable);
     }
     
-    public void buttonOnclick(Event event) throws SQLException{
+    public void buttonOnclick(Event event) throws SQLException, IOException{
         if(btn.getText().equals("Edit")){
             set_editability(true);
             btn.setText("Save");
