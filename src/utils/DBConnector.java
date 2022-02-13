@@ -20,13 +20,13 @@ public class DBConnector {
     }
 
     public Statement createStatement() throws SQLException {
-        if(statement == null) {
+        if(statement == null || statement.isClosed()) {
             statement = connection.createStatement();
         }
         return this.statement;
     }
     public void close() throws SQLException {
-        if(statement != null) statement.close();
-        if(connection != null) connection.close();
+        if(statement != null && !statement.isClosed()) statement.close();
+        if(connection != null && !connection.isClosed()) connection.close();
     }
 }
