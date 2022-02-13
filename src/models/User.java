@@ -76,6 +76,7 @@ public class User {
         
         
         connector.createStatement().executeUpdate(sql);
+        connector.close();
     }
 
     public void update() throws SQLException, IOException{
@@ -90,6 +91,9 @@ public class User {
             System.out.println(resultSet);
             resultSet.next();
             from_resultSet_To_User(resultSet);
+            
+            resultSet.close();
+            connector.close();
         }
         else{
             
@@ -99,6 +103,8 @@ public class User {
             String sql = "update \"user\" set name='" + name + "', email='" + email + "', username='" + username + "', password='" + password + "', role='" + role + "', status='" + status + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
             DBConnector connector = new DBConnector();
             connector.createStatement().executeUpdate(sql);
+
+            connector.close();
         }
         
     }
@@ -107,6 +113,8 @@ public class User {
         String sql = "delete from \"user\" where id=" + id;
         DBConnector connector = new DBConnector();
         connector.createStatement().execute(sql);
+        
+        connector.close();
     }
 
     private void from_resultSet_To_User(ResultSet resultSet) throws SQLException{
@@ -132,6 +140,9 @@ public class User {
         resultSet.next();
         User user = new User();
         user.from_resultSet_To_User(resultSet);
+
+        resultSet.close();
+        connector.close();
         return user;
     }
 
@@ -160,11 +171,15 @@ public class User {
         
         DBConnector connector = new DBConnector();
         connector.createStatement().execute(sql);
+
+        connector.close();
     }
 
     public static void drop_table() throws SQLException, IOException{
         String sql = "drop table \"user\"";
         DBConnector connector = new DBConnector();
         connector.createStatement().execute(sql);
+
+        connector.close();
     }
 }
