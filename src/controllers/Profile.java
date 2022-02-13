@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import models.User;
 
 public class Profile{
@@ -107,8 +106,4 @@ public class Profile{
 
     }
 
-    public void logout(Event event) throws IOException{
-        Signup signup = new Signup();
-        signup.start((Stage) ((Button) event.getSource()).getScene().getWindow());
-    }
 }
