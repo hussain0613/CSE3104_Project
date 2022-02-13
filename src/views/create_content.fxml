@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateContent">
+   <children>
+      <TextField fx:id="title_field" layoutX="74.0" layoutY="111.0" promptText="Title" />
+      <TextField fx:id="url_field" layoutX="446.0" layoutY="111.0" promptText="URL" />
+      <TextField fx:id="alternative_url_field" layoutX="817.0" layoutY="111.0" promptText="Alternative URL" />
+      <ChoiceBox fx:id="type_choice_box" layoutX="73.0" layoutY="163.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="privacy_choice_box" layoutX="445.0" layoutY="163.0" prefWidth="150.0" />
+      <TextArea fx:id="details_area" layoutX="74.0" layoutY="235.0" prefHeight="288.0" prefWidth="892.0" promptText="Details" />
+      <Button fx:id="cancel_btn" layoutX="236.0" layoutY="565.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="reset_btn" layoutX="494.0" layoutY="565.0" mnemonicParsing="false" text="Reset" />
+      <Button fx:id="create_btn" layoutX="718.0" layoutY="565.0" mnemonicParsing="false" onAction="#createContent" text="Create" />
+      <TextField fx:id="tag_field" layoutX="817.0" layoutY="163.0" promptText="Tag" />
+   </children>
+</Pane>
