@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class DBConnector {
     String connectionString;
-    Connection connection;
-    Statement statement;
+    public Connection connection;
+    public Statement statement;
     public DBConnector() throws SQLException, IOException {
         Config.load();
         connectionString = Config.connectionString;
