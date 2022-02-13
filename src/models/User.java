@@ -88,7 +88,6 @@ public class User {
             String sql = "select * from \"user\"where id=" + id;
             DBConnector connector = new DBConnector();
             ResultSet resultSet = connector.createStatement().executeQuery(sql);
-            System.out.println(resultSet);
             resultSet.next();
             from_resultSet_To_User(resultSet);
             

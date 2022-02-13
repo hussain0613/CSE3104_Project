@@ -1,8 +1,10 @@
 package models;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class Tag {
     public int creator_id, modifier_id;
     private String creation_datetime, modification_datetime;
 
-    public String tag, details;
+    public String tag;
 
 
     public Tag(){
@@ -25,7 +27,6 @@ public class Tag {
         creator_id = -1;
         modifier_id = -1;
         tag = null;
-        details = null;
         creation_datetime = null;
         modification_datetime = null;
     }
@@ -36,11 +37,9 @@ public class Tag {
         sync(true);
     }
 
-    public Tag(int creator_id, int modifier_id, String tag, String details){
+    public Tag(int creator_id, String tag){
         this.creator_id = creator_id;
-        this.modifier_id = modifier_id;
         this.tag = tag;
-        this.details = details;
     }
 
     public int get_id(){
@@ -57,7 +56,16 @@ public class Tag {
 
     public void insert() throws SQLException, IOException{
         connector = new DBConnector();
-        connector.createStatement().executeUpdate("INSERT INTO tag (creator_id, tag, detail, privacy, status) VALUES (" + creator_id + ", " + ", '" + tag + "', '" + details + "');");
+        
+        String sql = "INSERT INTO tag (creator_id, tag) VALUES (" + creator_id + ", '" + tag + "');";
+        PreparedStatement preparedStatement = connector.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        rs.next();
+        id = rs.getInt(1);
+
+        rs.close();
+        preparedStatement.close();
         connector.close();
     }
 
@@ -71,7 +79,6 @@ public class Tag {
             DBConnector connector = new DBConnector();
             
             ResultSet resultSet = connector.createStatement().executeQuery(sql);
-            System.out.println(resultSet);
             resultSet.next();
             from_resultSet_To_Tag(resultSet);
             
@@ -81,7 +88,7 @@ public class Tag {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             modification_datetime = dateFormat.format(date);
-            String sql = "update \"tag\" set creator_id=" + creator_id + ", modifier_id=" + modifier_id + ", tag='" + tag + "', details='" + details + "', url='" + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
+            String sql = "update \"tag\" set modifier_id=" + modifier_id + ", tag='" + tag + "', url='" + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
             DBConnector connector = new DBConnector();
             connector.createStatement().executeUpdate(sql);
 
@@ -102,7 +109,6 @@ public class Tag {
         creator_id = resultSet.getInt("creator_id");
         modifier_id = resultSet.getInt("modifier_id");
         tag = resultSet.getString("tag");
-        details = resultSet.getString("details");
         creation_datetime = resultSet.getString("creation_datetime");
         modification_datetime = resultSet.getString("modification_datetime");
     }
@@ -112,12 +118,20 @@ public class Tag {
     }
 
     public static Tag get_by_tag(String tag) throws SQLException, IOException{
-        String sql = "select * from \"tag\" where tag='" + tag + "' COLLATE Latin1_General_CS_AS";
+        String sql = "select * from \"tag\" where tag='" + tag + "'";
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);
         resultSet.next();
         Tag tag_obj = new Tag();
-        tag_obj.from_resultSet_To_Tag(resultSet);
+        try{
+            tag_obj.from_resultSet_To_Tag(resultSet);
+        }catch(SQLException e){
+            if(e.getMessage().contains("The result set has no current row")){
+                return null;
+            }else{
+                throw e;
+            }
+        }
 
         resultSet.close();
         connector.close();
@@ -152,7 +166,6 @@ public class Tag {
             + "modification_datetime datetime constraint df_tag_modification_datetime default getDate(),"
             
             + "tag varchar(50) not null,"
-            + "details text,"
             
             + "constraint pk_tag_id primary key(id),"
             + "constraint fk_tag_creator_id foreign key(creator_id) references \"user\"(id),"

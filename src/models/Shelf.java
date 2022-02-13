@@ -1,8 +1,10 @@
 package models;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,9 +41,8 @@ public class Shelf {
         sync(true);
     }
 
-    public Shelf(int creator_id, int modifier_id, String title, String details, String url, String alternative_url, String type, String privacy, boolean status){
+    public Shelf(int creator_id, String title, String details, String privacy, boolean status){
         this.creator_id = creator_id;
-        this.modifier_id = modifier_id;
         this.title = title;
         this.details = details;
         this.privacy = privacy;
@@ -62,7 +63,16 @@ public class Shelf {
 
     public void insert() throws SQLException, IOException{
         connector = new DBConnector();
-        connector.createStatement().executeUpdate("INSERT INTO shelf (creator_id, title, details, privacy, status) VALUES (" + creator_id + ", '" + title + "', '" + details + "', '" + privacy + "', '" + status + "')");
+        String sql = "INSERT INTO shelf (creator_id, title, details, privacy, status) VALUES (" + creator_id + ", '" + title + "', '" + details + "', '" + privacy + "', '" + status + "')";
+        PreparedStatement preparedStatement = connector.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.executeUpdate();
+
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        rs.next();
+        this.id = rs.getInt(1);
+
+        rs.close();
+        preparedStatement.close();
         connector.close();
     }
 
@@ -76,7 +86,6 @@ public class Shelf {
             DBConnector connector = new DBConnector();
             
             ResultSet resultSet = connector.createStatement().executeQuery(sql);
-            System.out.println(resultSet);
             resultSet.next();
             from_resultSet_To_Shelf(resultSet);
             
@@ -86,7 +95,7 @@ public class Shelf {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             modification_datetime = dateFormat.format(date);
-            String sql = "update \"shelf\" set creator_id=" + creator_id + ", modifier_id=" + modifier_id + ", title='" + title + "', details='" + details + "', privacy='" + privacy + "', status='" + status + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
+            String sql = "update \"shelf\" set modifier_id=" + modifier_id + ", title='" + title + "', details='" + details + "', privacy='" + privacy + "', status='" + status + "', modification_datetime='"+ modification_datetime + "' where id=" + id;
             DBConnector connector = new DBConnector();
             connector.createStatement().executeUpdate(sql);
 
