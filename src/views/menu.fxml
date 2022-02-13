@@ -55,11 +55,11 @@
                   </Button>
                </children>
             </VBox>
-            <Button layoutX="45.0" layoutY="495.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="Create Content">
+            <Button layoutX="45.0" layoutY="495.0" mnemonicParsing="false" onAction="#gotoCreateContent" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="Create Content">
                <font>
                   <Font size="18.0" />
                </font></Button>
-            <Button layoutX="45.0" layoutY="575.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="Create Shelf">
+            <Button layoutX="45.0" layoutY="575.0" mnemonicParsing="false" onAction="#gotoCreateShelf" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="Create Shelf">
                <font>
                   <Font size="18.0" />
                </font></Button>

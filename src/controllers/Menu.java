@@ -58,4 +58,16 @@ public class Menu {
         Signup signup = new Signup();
         signup.start((Stage) ((Button) event.getSource()).getScene().getWindow());
     }
+
+    public void gotoCreateContent(Event event) throws IOException{
+        CreateContent createContent = new CreateContent();
+        createContent.setData(current_user);
+        createContent.start(contentArea);
+    }
+
+    public void gotoCreateShelf(Event event) throws IOException{
+        CreateShelf createShelf = new CreateShelf();
+        createShelf.setData(current_user);
+        createShelf.start(contentArea);
+    }
 }
