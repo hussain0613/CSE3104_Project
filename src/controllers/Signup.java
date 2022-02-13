@@ -19,7 +19,7 @@ public class Signup {
 
     public void start(Stage primaryStage) throws IOException {
         Pane root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
-        primaryStage.setTitle("Sign Up");
+        primaryStage.setTitle("Welcome");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -61,9 +61,9 @@ public class Signup {
             User user = User.get_by_username(username);
             if(user.get_password().equals(pass)){
                 // msg_label.setText("Successfully logged in!");
-                Profile profile = new Profile();
-                profile.current_user = user;
-                profile.start((Stage) ((Button) event.getSource()).getScene().getWindow());
+                Menu menu = new Menu();
+                menu.current_user = user;
+                menu.start((Stage) ((Button) event.getSource()).getScene().getWindow());
             }
             else{
                 msg_label.setText("Wrong username or password");

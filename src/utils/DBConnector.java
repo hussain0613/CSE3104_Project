@@ -9,7 +9,6 @@ import java.sql.Statement;
 public class DBConnector {
     String connectionString;
     Connection connection;
-    Statement statement;
     public DBConnector() throws SQLException, IOException {
         Config.load();
         connectionString = Config.connectionString;
@@ -20,13 +19,7 @@ public class DBConnector {
     }
 
     public Statement createStatement() throws SQLException {
-        if(statement == null) {
-            statement = connection.createStatement();
-        }
-        return this.statement;
+        return connection.createStatement();
     }
-    public void close() throws SQLException {
-        if(statement != null) statement.close();
-        if(connection != null) connection.close();
-    }
+
 }

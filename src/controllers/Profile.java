@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -25,18 +24,19 @@ public class Profile{
 
     public void setData(User current_user){
         this.current_user = current_user;
-        from_user_obj_to_view();
     }
 
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Pane contentAreaPane) throws IOException {
         FXMLLoader fl = new FXMLLoader();
 
         Pane root = fl.load(getClass().getResource("/views/profile.fxml").openStream());
-        ((Profile)fl.getController()).setData(current_user);
+
+        Profile controller = fl.getController();
+        controller.setData(current_user);
+        controller.from_user_obj_to_view();
         
-        primaryStage.setTitle("Profile");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        contentAreaPane.getChildren().removeAll();
+        contentAreaPane.getChildren().setAll(root);
     }
 
     private void from_user_obj_to_view(){

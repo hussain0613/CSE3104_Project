@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Profile">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Profile">
    <children>
-      <Button layoutX="75.0" layoutY="24.0" mnemonicParsing="false" onAction="#logout" prefHeight="47.0" prefWidth="112.0" text="Logout">
+      <Button layoutX="783.0" layoutY="594.0" mnemonicParsing="false" onAction="#logout" prefHeight="47.0" prefWidth="112.0" text="Logout">
          <font>
             <Font size="18.0" />
          </font>
@@ -46,7 +46,7 @@
       <Label fx:id="confirm_password_label" layoutX="475.0" layoutY="550.0" prefHeight="25.0" prefWidth="100.0" text="Confirm Password:" visible="false" />
       <PasswordField fx:id="confirm_password_field" editable="false" layoutX="600.0" layoutY="550.0" prefHeight="25.0" prefWidth="220.0" visible="false" />
 
-      <Button fx:id="btn" layoutX="639.0" layoutY="594.0" mnemonicParsing="false" onAction="#buttonOnclick" prefHeight="47.0" prefWidth="112.0" text="Edit">
+      <Button fx:id="btn" layoutX="550.0" layoutY="594.0" mnemonicParsing="false" onAction="#buttonOnclick" prefHeight="47.0" prefWidth="112.0" text="Edit">
         <font>
             <Font size="18.0" />
         </font>

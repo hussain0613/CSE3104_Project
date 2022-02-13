@@ -10,6 +10,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
+        primaryStage.setResizable(false);
+        
         Signup signup = new Signup();
         signup.start(primaryStage);
         // primaryStage.setTitle("Home");

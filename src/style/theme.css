@@ -45,10 +45,13 @@
     -fx-text-fill: #1e2761;
 }
 
-.hyperlink2{
-    -fx-text-fill: #5c6bc0;
+.menu-button{
+    -fx-text-fill: white;
+    -fx-background-color: #1e2761;
+    -fx-text-alignment: center;
 }
 
-.hyperlink2:hover{
-    -fx-text-fill: #4052AB;
+.menu-button:hover{
+    -fx-background-color: #7a2048;
+    -fx-text-fill: white;
 }
