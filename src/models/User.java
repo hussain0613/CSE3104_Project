@@ -134,7 +134,7 @@ public class User {
     }
 
     public static User get_by_username(String username) throws SQLException, IOException{
-        String sql = "select * from \"user\" where username='" + username + "'";
+        String sql = "select * from \"user\" where username='" + username + "' COLLATE Latin1_General_CS_AS";
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);
         resultSet.next();
