@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +25,7 @@ public class Menu {
         this.current_user = current_user;
     }
 
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, SQLException {
         FXMLLoader fl = new FXMLLoader();
 
         Parent root = fl.load(getClass().getResource("/views/menu.fxml").openStream());
@@ -35,6 +38,8 @@ public class Menu {
         scene.getStylesheets().add("/style/theme.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        controller.gotoDashboard(new ActionEvent());
     }
 
     private void from_user_obj_to_view(){
@@ -69,5 +74,11 @@ public class Menu {
         CreateShelf createShelf = new CreateShelf();
         createShelf.setData(current_user);
         createShelf.start(contentArea);
+    }
+
+    public void gotoDashboard(Event event) throws IOException, SQLException{
+        Dashboard dashboard = new Dashboard();
+        dashboard.setData(current_user);
+        dashboard.start(contentArea);
     }
 }

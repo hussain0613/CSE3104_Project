@@ -28,7 +28,7 @@
          <children>
             <VBox prefHeight="400.0" prefWidth="240.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Dashboard">
+                  <Button mnemonicParsing="false" onAction="#gotoDashboard" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Dashboard">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
