@@ -43,7 +43,7 @@ public class CreateShelf {
     
     
     public void createShelf(Event event) throws IOException, SQLException{
-        Shelf shelf = new Shelf(current_user.get_id(), title_field.getText(), privacy_choice_box.getValue(), details_area.getText(), true);
+        Shelf shelf = new Shelf(current_user.get_id(), title_field.getText(), details_area.getText(), privacy_choice_box.getValue(), true);
         
         try {
             shelf.insert();

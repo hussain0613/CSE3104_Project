@@ -44,7 +44,7 @@ public class CreateContent {
     
     
     public void createContent(Event event) throws IOException, SQLException{
-        Content content = new Content(current_user.get_id(), title_field.getText(), url_field.getText(), alternative_url_field.getText(), type_choice_box.getValue(), privacy_choice_box.getValue(), details_area.getText(), true);
+        Content content = new Content(current_user.get_id(), title_field.getText(), url_field.getText(), alternative_url_field.getText(), type_choice_box.getValue(), details_area.getText(), privacy_choice_box.getValue(), true);
         
         try {
             content.insert();
