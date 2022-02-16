@@ -18,7 +18,7 @@ public class Menu {
     public User current_user;
 
     public Pane contentArea;
-    public Label username_label;
+    public Label username_label, title_label;
     public Button userlist_btn;
     
     public void setData(User current_user){
@@ -32,10 +32,11 @@ public class Menu {
         Menu controller = fl.getController();
         controller.setData(current_user);
         controller.from_user_obj_to_view();
+        controller.title_label.setText("Dashboard");
         
         primaryStage.setTitle("Digital Content Organizer");
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/style/theme.css");
+        scene.getStylesheets().add("/styles/theme.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -57,6 +58,8 @@ public class Menu {
         Profile profile = new Profile();
         profile.setData(current_user);
         profile.start(contentArea);
+
+        title_label.setText("Profile");
     }
 
     public void logout(Event event) throws IOException{
@@ -68,17 +71,23 @@ public class Menu {
         CreateContent createContent = new CreateContent();
         createContent.setData(current_user);
         createContent.start(contentArea);
+
+        title_label.setText("Create Content");
     }
 
     public void gotoCreateShelf(Event event) throws IOException{
         CreateShelf createShelf = new CreateShelf();
         createShelf.setData(current_user);
         createShelf.start(contentArea);
+
+        title_label.setText("Create Shelf");
     }
 
     public void gotoDashboard(Event event) throws IOException, SQLException{
         Dashboard dashboard = new Dashboard();
         dashboard.setData(current_user);
         dashboard.start(contentArea);
+
+        title_label.setText("Dashboard");
     }
 }

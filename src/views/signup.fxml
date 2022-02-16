@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@../style/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Signup">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Signup">
    <children>
       <Label fx:id="msg_label" alignment="CENTER" layoutX="565.0" layoutY="660.0">
          <font>
@@ -19,15 +19,15 @@
             <Font name="System Bold Italic" size="34.0" />
          </font>
       </Label>
-      <TextField fx:id="login_username_field"  layoutX="750.0" layoutY="260.0" prefHeight="50.0" prefWidth="350.0" promptText="Username" styleClass="textfield">
+      <TextField fx:id="login_username_field" layoutX="750.0" layoutY="260.0" prefHeight="50.0" prefWidth="350.0" promptText="Username" styleClass="textfield">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></TextField>
-      <PasswordField fx:id="login_pass_field"  layoutX="750.0" layoutY="350.0" prefHeight="50.0" prefWidth="350.0" promptText="Password" styleClass="textfield">
+      <PasswordField fx:id="login_pass_field" layoutX="750.0" layoutY="350.0" prefHeight="50.0" prefWidth="350.0" promptText="Password" styleClass="textfield">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></PasswordField>
-      <Button fx:id="login_btn"  layoutX="850.0" layoutY="520.0" mnemonicParsing="false" onAction="#login" prefHeight="55.0" prefWidth="150.0" styleClass="primary-button" text="Login">
+      <Button fx:id="login_btn" layoutX="850.0" layoutY="520.0" mnemonicParsing="false" onAction="#login" prefHeight="55.0" prefWidth="150.0" styleClass="primary-button" text="Login">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -42,22 +42,22 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="username_field"  layoutX="150.0" layoutY="240.0" prefHeight="35.0" prefWidth="250.0" promptText="Username" styleClass="textfield">
+            <TextField fx:id="username_field" layoutX="150.0" layoutY="240.0" prefHeight="35.0" prefWidth="250.0" promptText="Username" styleClass="textfield">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="email_field"  layoutX="150.0" layoutY="320.0" prefHeight="35.0" prefWidth="250.0" promptText="Email" styleClass="textfield">
+            <TextField fx:id="email_field" layoutX="150.0" layoutY="320.0" prefHeight="35.0" prefWidth="250.0" promptText="Email" styleClass="textfield">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="pass_field"  layoutX="150.0" layoutY="400.0" prefHeight="35.0" prefWidth="250.0" promptText="Password" styleClass="textfield">
+            <PasswordField fx:id="pass_field" layoutX="150.0" layoutY="400.0" prefHeight="35.0" prefWidth="250.0" promptText="Password" styleClass="textfield">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="confpass_field"  layoutX="150.0" layoutY="480.0" prefHeight="35.0" prefWidth="250.0" promptText="Confirm Password" styleClass="textfield">
+            <PasswordField fx:id="confpass_field" layoutX="150.0" layoutY="480.0" prefHeight="35.0" prefWidth="250.0" promptText="Confirm Password" styleClass="textfield">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Font name="System Bold Italic" size="30.0" />
                </font>
             </Label>
-            <Button fx:id="signup_btn"  layoutX="200.0" layoutY="580.0" mnemonicParsing="false" onAction="#signup" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="SignUp">
+            <Button fx:id="signup_btn" layoutX="200.0" layoutY="580.0" mnemonicParsing="false" onAction="#signup" prefHeight="55.0" prefWidth="150.0" styleClass="secondary-button" text="SignUp">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -77,7 +77,7 @@
             </Button>
          </children>
       </Pane>
-      <Label alignment="CENTER"  layoutX="975.0" layoutY="410.0" styleClass="hyperlink1" text="Forgot Password?">
+      <Label alignment="CENTER" layoutX="975.0" layoutY="410.0" styleClass="hyperlink1" text="Forgot Password?">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

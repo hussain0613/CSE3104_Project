@@ -18,8 +18,13 @@
                </font></Button>
             <Label fx:id="username_label" layoutX="14.0" layoutY="22.0" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Italic" size="18.0" />
                </font></Label>
+            <Label fx:id="title_label" layoutX="690.0" layoutY="14.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </top>
