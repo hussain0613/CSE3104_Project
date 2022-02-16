@@ -15,13 +15,17 @@ import models.User;
 
 public class Signup {
     public TextField name_field, email_field, username_field, pass_field, confpass_field, login_username_field, login_pass_field;
-    public Label msg_label; 
+    public Label msg_label;
+    public Button signup_btn, login_btn; 
 
     public void start(Stage primaryStage) throws IOException {
         Pane root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
         primaryStage.setTitle("Welcome");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        signup_btn = (Button) root.lookup("#signup_btn");
+        signup_btn.requestFocus();
     }
 
     public void signup(Event event){
