@@ -20,7 +20,7 @@ public class CreateContent {
     public ChoiceBox<String> type_choice_box, privacy_choice_box;
     public TextArea details_area;
 
-    public Button cancel_btn, reset_btn, create_btn;
+    public Button reset_btn, create_btn;
 
     User current_user;
 
@@ -36,7 +36,9 @@ public class CreateContent {
         CreateContent controller = fl.getController();
         controller.setData(current_user);
         controller.type_choice_box.getItems().addAll("Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
+        controller.type_choice_box.getSelectionModel().select(0);
         controller.privacy_choice_box.getItems().addAll("Private", "Custom", "Public");
+        controller.privacy_choice_box.getSelectionModel().select(0);
         
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
