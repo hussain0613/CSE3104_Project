@@ -19,7 +19,7 @@ public class Profile{
     public Label msg_label, creation_datetime_label, modification_datetime_label, password_label, confirm_password_label; 
     public PasswordField password_field, confirm_password_field;
 
-    public Button btn;
+    public Button edit_btn, cancel_btn;
 
     public void setData(User current_user){
         this.current_user = current_user;
@@ -77,14 +77,17 @@ public class Profile{
         confirm_password_field.setVisible(editable);
     }
     
-    public void buttonOnclick(Event event) throws SQLException, IOException{
-        if(btn.getText().equals("Edit")){
+    public void editButtonOnclick(Event event) throws SQLException, IOException{
+        
+        if(edit_btn.getText().equals("Edit")){
             set_editability(true);
-            btn.setText("Save");
+            edit_btn.setText("Save");
+            cancel_btn.setVisible(true);
         }
         else{
             set_editability(false);
-            btn.setText("Edit");
+            edit_btn.setText("Edit");
+            cancel_btn.setVisible(false);
             if(password_field.getText().equals(confirm_password_field.getText())){
                 try {
                     from_view_to_user_obj();
@@ -104,6 +107,13 @@ public class Profile{
             }
         }
 
+    }
+
+    public void cancelButtonOnclick(Event event) throws IOException{
+        from_user_obj_to_view();
+        set_editability(false);
+        edit_btn.setText("Edit");
+        cancel_btn.setVisible(false);
     }
 
 }

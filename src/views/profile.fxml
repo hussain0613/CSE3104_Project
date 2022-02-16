@@ -9,101 +9,101 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Profile">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="465.0" layoutY="50.0" text="Profile" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="34.0" />
-         </font>
-      </Label>
-      <Label layoutX="245.0" layoutY="125.0" text="Name:">
+      <Label layoutX="245.0" layoutY="80.0" text="Name:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <TextField fx:id="name_field" editable="false" layoutX="395.0" layoutY="120.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
+      <TextField fx:id="name_field" editable="false" layoutX="395.0" layoutY="75.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
       
-      <Label layoutX="245.0" layoutY="185.0" text="Username:">
+      <Label layoutX="245.0" layoutY="140.0" text="Username:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <TextField fx:id="username_field" editable="false" layoutX="395.0" layoutY="180.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
+      <TextField fx:id="username_field" editable="false" layoutX="395.0" layoutY="135.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
       
-      <Label layoutX="245.0" layoutY="245.0" text="Email:">
+      <Label layoutX="245.0" layoutY="200.0" text="Email:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <TextField fx:id="email_field" editable="false" layoutX="395.0" layoutY="240.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
+      <TextField fx:id="email_field" editable="false" layoutX="395.0" layoutY="195.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
       
-      <Label layoutX="245.0" layoutY="305.0" text="Role:">
+      <Label layoutX="245.0" layoutY="260.0" text="Role:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <TextField fx:id="role_field" editable="false" layoutX="395.0" layoutY="300.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
+      <TextField fx:id="role_field" editable="false" layoutX="395.0" layoutY="255.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
       
-      <Label layoutX="245.0" layoutY="365.0" text="Status:">
+      <Label layoutX="245.0" layoutY="320.0" text="Status:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <TextField fx:id="status_field" editable="false" layoutX="395.0" layoutY="360.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
+      <TextField fx:id="status_field" editable="false" layoutX="395.0" layoutY="315.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
 
-      <Label layoutX="245.0" layoutY="425.0" text="Created:">
+      <Label layoutX="245.0" layoutY="380.0" text="Created:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <Label fx:id="creation_datetime_label" layoutX="395.0" layoutY="420.0" prefHeight="35.0" prefWidth="250.0">
+      <Label fx:id="creation_datetime_label" layoutX="395.0" layoutY="375.0" prefHeight="35.0" prefWidth="250.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
 
-      <Label layoutX="245.0" layoutY="485.0" text="Last Modified:">
+      <Label layoutX="245.0" layoutY="440.0" text="Last Modified:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <Label fx:id="modification_datetime_label" layoutX="395.0" layoutY="480.0" prefHeight="35.0" prefWidth="250.0">
+      <Label fx:id="modification_datetime_label" layoutX="395.0" layoutY="435.0" prefHeight="35.0" prefWidth="250.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
 
-      <Label fx:id="password_label" layoutX="245.0" layoutY="545.0" text="Password:" visible="false">
+      <Label fx:id="password_label" layoutX="245.0" layoutY="500.0" text="Password:" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <PasswordField fx:id="password_field" editable="false" layoutX="395.0" layoutY="540.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
+      <PasswordField fx:id="password_field" editable="false" layoutX="395.0" layoutY="495.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></PasswordField>
 
-      <Label fx:id="confirm_password_label" layoutX="245.0" layoutY="605.0" text="Confirm Password:" visible="false">
+      <Label fx:id="confirm_password_label" layoutX="245.0" layoutY="560.0" text="Confirm Password:" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
-      <PasswordField fx:id="confirm_password_field" editable="false" layoutX="395.0" layoutY="600.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
+      <PasswordField fx:id="confirm_password_field" editable="false" layoutX="395.0" layoutY="555.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></PasswordField>
 
-      <Button fx:id="btn" layoutX="792.0" layoutY="305.0" mnemonicParsing="false" onAction="#buttonOnclick" prefHeight="50.0" prefWidth="120.0" styleClass="primary-button" text="Edit">
+      <Button fx:id="edit_btn" layoutX="792.0" layoutY="295.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="50.0" prefWidth="120.0" styleClass="primary-button" text="Edit">
         <font>
             <Font size="18.0" />
         </font>
        </Button>
       
-      <Label fx:id="msg_label" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="12.0" textAlignment="CENTER">
+      <Label fx:id="msg_label" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="626.0" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
+      <Button fx:id="cancel_btn" layoutX="792.0" layoutY="380.0" mnemonicParsing="false" onAction="#cancelButtonOnclick" prefHeight="50.0" prefWidth="120.0" styleClass="primary-button" text="Cancel" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
