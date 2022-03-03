@@ -85,10 +85,12 @@ public class ShelfTag {
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"shelf-tag\"("
+            + "id int identity(1,1),"
             + "shelf_id int,"
             + "tag_id int,"
             
-            + "constraint \"pk_shelf-tag_shelf_id_tag_id\" primary key(shelf_id, tag_id),"
+            + "constraint \"pk-shelf-tag_id\" primary key (id),"
+            + "constraint \"uq_shelf-tag_shelf_id_tag_id\" unique(shelf_id, tag_id),"
             + "constraint \"fk_shelf-tag_shelf_id\" foreign key(shelf_id) references shelf(id) on delete cascade,"
             + "constraint \"fk_shelf-tag_tag_id\" foreign key(tag_id) references tag(id) on delete cascade"
         + ");";

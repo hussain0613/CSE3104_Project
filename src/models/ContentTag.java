@@ -86,10 +86,12 @@ public class ContentTag {
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"content-tag\"("
+            + "id int identity(1,1),"
             + "content_id int,"
             + "tag_id int,"
             
-            + "constraint \"pk_content-tag_content_id_tag_id\" primary key(content_id, tag_id),"
+            + "constraint \"pk-content-tag_id\" primary key (id),"
+            + "constraint \"uq_content-tag_content_id_tag_id\" unique(content_id, tag_id),"
             + "constraint \"fk_content-tag_content_id\" foreign key(content_id) references content(id) on delete cascade,"
             + "constraint \"fk_content-tag_tag_id\" foreign key(tag_id) references tag(id) on delete cascade"
         + ");";
