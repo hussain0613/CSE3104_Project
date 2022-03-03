@@ -12,6 +12,9 @@ public class Setup {
         Tag.create_table();
         ContentTag.create_table();
         ShelfTag.create_table();
+        ContentShelf.create_table();
+        ContentUser.create_table();
+        ShelfUser.create_table();
 
         System.out.println("[*] Tables created");
     }
@@ -23,6 +26,9 @@ public class Setup {
         Shelf.drop_table();
         Content.drop_table();
         User.drop_table();
+        ContentShelf.drop_table();
+        ContentUser.drop_table();
+        ShelfUser.drop_table();
         
         System.out.println("[*] Tables dropped");
     }
