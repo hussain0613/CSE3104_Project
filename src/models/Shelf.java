@@ -152,6 +152,23 @@ public class Shelf {
         return shelfs;
     }
 
+
+    public static ArrayList<Shelf> get_by_tag(String tag) throws SQLException, IOException{
+        String sql = "select * from \"shelf\""
+            + " join \"shelf-tag\" on \"shelf\".id=\"shelf-tag\".shelf_id"
+            + " join \"tag\" on \"shelf-tag\".tag_id=\"tag\".id"
+            + " where \"tag\".tag='" + tag + "';";
+            
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Shelf> contents = from_resultSet_To_Shelf_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return contents;
+    }
+
+
     public static void create_table() throws SQLException, IOException{
         String sql = "create table shelf("
             + "id int identity(1, 1),"

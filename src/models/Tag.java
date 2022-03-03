@@ -113,6 +113,11 @@ public class Tag {
         modification_datetime = resultSet.getString("modification_datetime");
     }
 
+    @Override
+    public String toString(){
+        return "Tag["+tag+"]";
+    }
+
     public static Tag get_by_id(int id) throws SQLException, IOException{
         return new Tag(id);
     }
@@ -139,7 +144,25 @@ public class Tag {
     }
 
     public static ArrayList<Tag> get_by_content_id(int content_id) throws SQLException, IOException{
-        String sql = "select * from \"tag\" join content_tag on \"tag\".id=content_tag.tag_id where content_id=" + content_id;
+        String sql = "select * from \"tag\" join \"content-tag\" on \"tag\".id=\"content-tag\".tag_id where content_id=" + content_id;
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        
+        ArrayList<Tag> tags = new ArrayList<Tag>();
+        while(resultSet.next()){
+            Tag tag_obj = new Tag();
+            tag_obj.from_resultSet_To_Tag(resultSet);
+            tags.add(tag_obj);
+        }
+
+        resultSet.close();
+        connector.close();
+        return tags;
+    }
+
+    
+    public static ArrayList<Tag> get_by_shelf_id(int shelf_id)throws SQLException, IOException{
+        String sql = "select * from \"tag\" join \"shelf-tag\" on \"tag\".id=\"shelf-tag\".tag_id where shelf_id=" + shelf_id;
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);
         

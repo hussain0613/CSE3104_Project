@@ -155,6 +155,22 @@ public class Content {
         return contents;
     }
 
+
+    public static ArrayList<Content> get_by_tag(String tag) throws SQLException, IOException{
+        String sql = "select * from \"content\""
+            + " join \"content-tag\" on \"content\".id=\"content-tag\".content_id"
+            + " join \"tag\" on \"content-tag\".tag_id=\"tag\".id"
+            + " where \"tag\".tag='" + tag + "';";
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Content> contents = from_resultSet_To_Content_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return contents;
+    }
+
+
     public static void create_table() throws SQLException, IOException{
         String sql = "create table content("
             + "id int identity(1, 1),"
