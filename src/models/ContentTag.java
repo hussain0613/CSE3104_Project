@@ -83,6 +83,20 @@ public class ContentTag {
         return new ContentTag(id);
     }
 
+    public static ContentTag get_by_unique_constraint(int content_id, int tag_id) throws SQLException, IOException{
+        String sql = "select * from \"content-tag\" where content_id=" + content_id + " and tag_id=" + tag_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        ContentTag contentTag = new ContentTag();
+        contentTag.from_resultSet_To_ContentTag(resultSet);
+
+        resultSet.close();
+        connector.close();
+
+        return contentTag;
+    }
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"content-tag\"("

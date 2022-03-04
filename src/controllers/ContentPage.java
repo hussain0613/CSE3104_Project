@@ -169,21 +169,25 @@ public class ContentPage {
         });
         cell.getChildren().add(tag_hp);
 
-        cell.getChildren().add(new Label("|"));
+        if(current_content.creator_id == current_user.get_id() || current_contentuser.permission.equals("Edit")){
+            
+            cell.getChildren().add(new Label("|"));
 
-        Hyperlink remove_btn = new Hyperlink("X");
-        remove_btn.setOnAction(e -> {
-            tags.remove(tag);
-            tag_list_hbox.getChildren().remove(cell);
-            if(tag.get_id() != -1) {
-                try {
-                    tag.delete();
-                } catch (SQLException | IOException e1) {
-                    e1.printStackTrace();
+            Hyperlink remove_btn = new Hyperlink("X");
+            remove_btn.setOnAction(e -> {
+                tags.remove(tag);
+                tag_list_hbox.getChildren().remove(cell);
+                if(tag.get_id() != -1) {
+                    try {
+                        ContentTag content_tag = ContentTag.get_by_unique_constraint(current_content.get_id(), tag.get_id());
+                        content_tag.delete();
+                    } catch (SQLException | IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
-            }
-        });
-        cell.getChildren().add(remove_btn);
+            });
+            cell.getChildren().add(remove_btn);
+        }
 
         tag_list_hbox.getChildren().add(cell);
     }

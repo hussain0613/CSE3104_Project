@@ -76,7 +76,7 @@ public class ContentUser {
             resultSet.close();
             connector.close();
         } else {
-            String sql = "update \"content-user\" set content_id=" + content_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked=" + bookmarked + " where id=" + id;
+            String sql = "update \"content-user\" set content_id=" + content_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked='" + bookmarked + "' where id=" + id;
             
             DBConnector connector = new DBConnector();
 
