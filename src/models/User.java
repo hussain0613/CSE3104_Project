@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import utils.DBConnector;
@@ -128,6 +129,16 @@ public class User {
         modification_datetime = resultSet.getString("modification_datetime");
     }
 
+    public static ArrayList<User> from_resultSet_To_User_Array(ResultSet resultSet) throws SQLException{
+        ArrayList<User> users = new ArrayList<User>();
+        while(resultSet.next()){
+            User user = new User();
+            user.from_resultSet_To_User(resultSet);
+            users.add(user);
+        }
+        return users;
+    }
+
     public static User get_by_id(int id) throws SQLException, IOException{
         return new User(id);
     }
@@ -145,6 +156,18 @@ public class User {
         return user;
     }
 
+    
+    public static ArrayList<User> get_all() throws SQLException, IOException{
+        String sql = "select * from \"user\"";
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<User> users = from_resultSet_To_User_Array(resultSet);
+
+        resultSet.close();
+        connector.close();
+        return users;
+    }
+
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"user\"(" +
             "id int identity(1,1)," +
@@ -156,7 +179,7 @@ public class User {
             "email varchar(100) not null," +
             "username varchar(20) not null," +
             "\"password\" varchar(20) not null," +
-            "\"role\" nvarchar(20) constraint df_user_role default 'general'," +
+            "\"role\" nvarchar(20) constraint df_user_role default 'user'," +
             "\"status\" bit constraint df_user_status default 1" +
             
             "constraint pk_user_id primary key(id), " +

@@ -186,7 +186,7 @@ public class Content {
     public static ArrayList<Content> get_bookmarked(int user_id) throws SQLException, IOException{
         String sql = "select * from \"content\""
             + " join \"content-user\" on \"content\".id=\"content-user\".content_id"
-            + " where bookmarked=1 and user_id=" + user_id + ";";
+            + " where bookmarked=1 and \"user_id\"=" + user_id + ";";
         
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);
@@ -199,7 +199,7 @@ public class Content {
     public static ArrayList<Content> get_shared(int user_id) throws SQLException, IOException{
         String sql = "select * from \"content\""
             + " join \"content-user\" on \"content\".id=\"content-user\".content_id"
-            + " where (permission='view' or permission='edit') and user_id=" + user_id + ";";
+            + " where (permission='view' or permission='edit') and \"user_id\"=" + user_id + ";";
         
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);

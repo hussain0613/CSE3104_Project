@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserList">
+   <children>
+      <TableView fx:id="table" onMouseClicked="#mouse_click_event_handler" prefHeight="660.0" prefWidth="1040.0">
+        <columns>
+          <TableColumn fx:id="username_col" prefWidth="200.0" text="Username" />
+          <TableColumn fx:id="name_col" prefWidth="240.0" text="Name" />
+          <TableColumn fx:id="email_col" prefWidth="300.0" text="Email" />
+            <TableColumn fx:id="role_col" prefWidth="150.0" text="Role" />
+            <TableColumn fx:id="status_col" prefWidth="150.0" text="Status" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

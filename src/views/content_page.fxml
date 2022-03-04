@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" styleClass="root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContentPage">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContentPage">
    <AnchorPane prefHeight="658.0" prefWidth="1038.0">
     <children>
         <Label fx:id="msg_label" layoutX="20.0" layoutY="19.0">
@@ -66,7 +66,7 @@
             </font>
         </Label>
         <ChoiceBox fx:id="privacy_choice_box" disable="true" layoutX="140.0" layoutY="295.0" prefWidth="150.0" />
-         <Pane fx:id="user_permission_pane" layoutX="69.0" layoutY="333.0" visible="false">
+         <Pane fx:id="user_permission_pane" layoutX="69.0" layoutY="333.0" stylesheets="@/styles/default.css" visible="false">
             <children>
                <Pane fx:id="add_permission_pane" layoutX="8.0" visible="false">
                   <children>
