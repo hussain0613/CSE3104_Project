@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -19,7 +20,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Button fx:id="edit_btn" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="primary-button" text="Edit">
+        <Button fx:id="edit_btn" disable="true" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="primary-button" text="Edit" visible="false">
             <font>
                 <Font size="14.0" />
             </font></Button>
@@ -49,11 +50,11 @@
               </Button>
             </children>
          </Pane>
-        <Label fx:id="tags_label" layoutX="442.0" layoutY="198.0" textFill="#1e2761">
-            <font>
-                <Font name="System Bold Italic" size="14.0" />
-            </font>
-        </Label>
+         <ScrollPane layoutX="442.0" layoutY="198.0" prefWidth="524.0">
+            <content>
+               <HBox fx:id="tag_list_hbox" spacing="5.0" />
+            </content>
+         </ScrollPane>
         <Label layoutX="72.0" layoutY="260.0" text="Type:">
             <font>
                 <Font name="System Bold" size="16.0" />
@@ -66,9 +67,9 @@
             </font>
         </Label>
         <ChoiceBox fx:id="privacy_choice_box" disable="true" layoutX="140.0" layoutY="295.0" prefWidth="150.0" />
-         <Pane fx:id="user_permission_pane" layoutX="69.0" layoutY="333.0" stylesheets="@/styles/default.css" visible="false">
+         <Pane fx:id="user_permission_pane" layoutX="69.0" layoutY="333.0" stylesheets="@/styles/default.css">
             <children>
-               <Pane fx:id="add_permission_pane" layoutX="8.0" visible="false">
+               <Pane fx:id="add_permission_pane" disable="true" layoutX="8.0" visible="false">
                   <children>
                     <TextField fx:id="username_field" layoutY="6.0" prefHeight="35.0" prefWidth="250.0" promptText="Username" styleClass="textfield">
                         <font>
@@ -86,7 +87,7 @@
                </Pane>
                <ScrollPane layoutY="55.0" prefHeight="175.0" prefWidth="898.0">
                   <content>
-                     <VBox fx:id="user_list_vbox" prefWidth="596.0" />
+                     <VBox fx:id="user_list_vbox" disable="true" prefWidth="596.0" />
                   </content>
                </ScrollPane>
             </children>
@@ -99,6 +100,8 @@
             <font>
                 <Font size="18.0" />
             </font></Button>
+         <Button fx:id="delete_btn" disable="true" layoutX="849.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="danger-button" text="Delete" visible="false" />
+         <Button fx:id="bookmark_btn" layoutX="678.0" layoutY="14.0" mnemonicParsing="false" onAction="#bookmarkButtonOnclick" prefHeight="30.0" prefWidth="145.0" styleClass="secondary-button" text="Add Bookmark" />
     </children>
    </AnchorPane>
 </ScrollPane>
