@@ -20,7 +20,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Button fx:id="edit_btn" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="primary-button" text="Edit">
+        <Button fx:id="edit_btn" disable="true" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="primary-button" text="Edit" visible="false">
             <font>
                 <Font size="14.0" />
             </font></Button>
@@ -100,6 +100,8 @@
             <font>
                 <Font size="18.0" />
             </font></Button>
+         <Button fx:id="delete_btn" disable="true" layoutX="849.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="danger-button" text="Delete" visible="false" />
+         <Button fx:id="bookmark_btn" layoutX="678.0" layoutY="14.0" mnemonicParsing="false" onAction="#bookmarkButtonOnclick" prefHeight="30.0" prefWidth="145.0" styleClass="secondary-button" text="Add Bookmark" />
     </children>
    </AnchorPane>
 </ScrollPane>
