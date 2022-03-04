@@ -29,15 +29,16 @@ public class ContentPage {
     public ChoiceBox<String> type_choice_box, privacy_choice_box, permission_choice_box;
     public TextArea details_area;
     public Label msg_label;
-    public Button edit_btn, save_btn, add_tag_btn;
+    public Button edit_btn, save_btn, add_tag_btn, delete_btn, bookmark_btn;
     public VBox user_list_vbox;
     public HBox tag_list_hbox;
-    public Pane add_tag_pane, user_permission_pane, add_permission_pane;
+    public Pane add_tag_pane, user_permission_pane, add_permission_pane, contentAreaPane;
 
     User current_user, content_owner;
     Content current_content;
     ArrayList <Tag> tags = new ArrayList<Tag>();
     ArrayList<ContentUser> contentusers = new ArrayList<ContentUser>();
+    ContentUser current_contentuser;
 
     public void setData(User current_user, Content current_content){
         this.current_user = current_user;
@@ -47,8 +48,9 @@ public class ContentPage {
             tags = Tag.get_by_content_id(current_content.get_id());
             content_owner = User.get_by_id(current_content.creator_id);
             contentusers = ContentUser.get_by_content_id(current_content.get_id());
+            current_contentuser = ContentUser.get_by_unique_constraint(current_content.get_id(), current_user.get_id());
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -59,12 +61,13 @@ public class ContentPage {
 
         ContentPage controller = fl.getController();
         
-        controller.setData(current_user, current_content); 
+        controller.setData(current_user, current_content);
         controller.from_content_obj_to_view();
         
+        controller.contentAreaPane = contentAreaPane;
         controller.type_choice_box.getItems().addAll("Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
         controller.type_choice_box.getSelectionModel().select(current_content.type);
-        
+
         controller.privacy_choice_box.getItems().addAll("Private", "Custom", "Public");
         controller.privacy_choice_box.getSelectionModel().select(current_content.privacy);
         
@@ -83,6 +86,22 @@ public class ContentPage {
             }
         });
         
+        if(current_content.creator_id == current_user.get_id()){
+            controller.edit_btn.setVisible(true);
+            controller.edit_btn.setDisable(false);
+            controller.delete_btn.setVisible(true);
+            controller.delete_btn.setDisable(false);
+        }
+        if(current_contentuser != null){
+            if(current_contentuser.permission.equals("Edit")){
+                controller.edit_btn.setVisible(true);
+                controller.edit_btn.setDisable(false);
+            }
+            if(current_contentuser.bookmarked){
+                controller.bookmark_btn.setText("Unbookmark");
+            }
+        }
+
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }
@@ -354,6 +373,37 @@ public class ContentPage {
             tags = Tag.get_by_content_id(current_content.get_id());
             contentusers = ContentUser.get_by_content_id(current_content.get_id());
             from_content_obj_to_view();
+        }
+    }
+
+    public void deleteButtonOnclick(Event event) throws SQLException, IOException{
+        if(current_content.creator_id != current_user.get_id()){
+            msg_label.setText("You are not the creator of this content!");
+            return;
+        }
+        current_content.delete();
+        Dashboard dashboard = new Dashboard();
+        
+        dashboard.setData(current_user);
+        dashboard.start(contentAreaPane);
+    }
+
+    public void bookmarkButtonOnclick(Event event) throws SQLException, IOException{
+        if(current_contentuser == null){
+            current_contentuser = new ContentUser(current_content.get_id(), current_user.get_id(), null, true);
+            current_contentuser.insert();
+            bookmark_btn.setText("Bookmarked");
+            return;
+        }
+
+        current_contentuser.bookmarked = !current_contentuser.bookmarked;
+        current_contentuser.update();
+        current_contentuser.sync(true);
+
+        if(current_contentuser.bookmarked){
+            bookmark_btn.setText("Bookmarked");
+        }else{
+            bookmark_btn.setText("Add Bookmark");
         }
     }
 }
