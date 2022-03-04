@@ -1,8 +1,10 @@
 package models;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import utils.DBConnector;
@@ -45,7 +47,15 @@ public class ContentUser {
     public void insert() throws SQLException, IOException {
         connector = new DBConnector();
         String sql = "INSERT INTO \"content-user\" (content_id, user_id, permission, bookmarked) VALUES (" + content_id + ", " + user_id + ", '" + permission + "', '" + bookmarked + "');";
-        connector.createStatement().executeUpdate(sql);
+        
+        PreparedStatement preparedStatement = connector.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        rs.next();
+        id = rs.getInt(1);
+
+        rs.close();
+        preparedStatement.close();
         connector.close();
     }
 
@@ -99,6 +109,21 @@ public class ContentUser {
 
     public static ContentUser get_by_id(int id) throws SQLException, IOException {
         return new ContentUser(id);
+    }
+
+    public static ContentUser get_by_unique_constraint(int content_id, int user_id) throws SQLException, IOException {
+        String sql = "select * from \"content-user\" where content_id=" + content_id + " and user_id=" + user_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        ContentUser contentUser = new ContentUser();
+        contentUser.from_resultSet_To_ContentUser(resultSet);
+
+        resultSet.close();
+        connector.close();
+
+        return contentUser;
     }
 
     public static ArrayList<ContentUser> get_by_content_id(int content_id) throws SQLException, IOException {
