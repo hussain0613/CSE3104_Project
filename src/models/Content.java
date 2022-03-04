@@ -87,7 +87,7 @@ public class Content {
 
     public void sync(boolean update_object) throws SQLException, IOException{
         if(update_object){
-            String sql = "select * from \"conent\" where id=" + id;
+            String sql = "select * from \"content\" where id=" + id;
             DBConnector connector = new DBConnector();
             
             ResultSet resultSet = connector.createStatement().executeQuery(sql);
