@@ -42,7 +42,7 @@ public class ShelfUser {
 
     public void insert() throws SQLException, IOException {
         connector = new DBConnector();
-        connector.createStatement().executeUpdate("INSERT INTO \"shelf-user\" (shelf_id, user_id, permission, bookmarked) VALUES (" + shelf_id + ", " + user_id + ", '" + permission + "', " + bookmarked + ");");
+        connector.createStatement().executeUpdate("INSERT INTO \"shelf-user\" (shelf_id, \"user_id\", permission, bookmarked) VALUES (" + shelf_id + ", " + user_id + ", '" + permission + "', " + bookmarked + ");");
         connector.close();
     }
 
@@ -62,7 +62,7 @@ public class ShelfUser {
             resultSet.close();
             connector.close();
         } else {
-            String sql = "update \"shelf-user\" set shelf_id=" + shelf_id + ", user_id=" + user_id + ", permission='" + permission + "', bookmarked=" + bookmarked + " where id=" + id;
+            String sql = "update \"shelf-user\" set shelf_id=" + shelf_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked=" + bookmarked + " where id=" + id;
             DBConnector connector = new DBConnector();
 
             connector.createStatement().executeUpdate(sql);
@@ -102,14 +102,14 @@ public class ShelfUser {
         String sql = "create table \"shelf-user\"("
             + "id int identity(1,1),"
             + "shelf_id int,"
-            + "user_id int,"
+            + "\"user_id\" int,"
             + "permission varchar(20),"
             + "bookmarked bit constraint \"df_shelf-user_bookmarked\" default 0,"
             
             + "constraint \"pk-shelf-user_id\" primary key (id),"
-            + "constraint \"uq_shelf-user_shelf_id_user_id\" unique(shelf_id, user_id),"
+            + "constraint \"uq_shelf-user_shelf_id_user_id\" unique(shelf_id, \"user_id\"),"
             + "constraint \"fk_shelf-user_shelf_id\" foreign key(shelf_id) references shelf(id) on delete cascade,"
-            + "constraint \"fk_shelf-user_user_id\" foreign key(user_id) references \"user\"(id) on delete cascade"
+            + "constraint \"fk_shelf-user_user_id\" foreign key(\"user_id\") references \"user\"(id) on delete cascade"
         + ");";
         
         DBConnector connector = new DBConnector();

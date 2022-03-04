@@ -172,7 +172,7 @@ public class Shelf {
     public static ArrayList<Shelf> get_bookmarked(int user_id) throws SQLException, IOException{
         String sql = "select * from \"shelf\""
             + " join \"shelf-user\" on \"shelf\".id=\"shelf-user\".shelf_id"
-            + " where bookmarked=1 and user_id=" + user_id + ";";
+            + " where bookmarked=1 and \"user_id\"=" + user_id + ";";
             
         
         DBConnector connector = new DBConnector();
@@ -187,7 +187,7 @@ public class Shelf {
     public static ArrayList<Shelf> get_shared(int user_id) throws SQLException, IOException{
         String sql = "select * from \"shelf\""
             + " join \"shelf-user\" on \"shelf\".id=\"shelf-user\".shelf_id"
-            + " where (permission='view' or permission='edit') and user_id=" + user_id + ";";
+            + " where (permission='view' or permission='edit') and \"user_id\"=" + user_id + ";";
         
         DBConnector connector = new DBConnector();
         ResultSet resultSet = connector.createStatement().executeQuery(sql);

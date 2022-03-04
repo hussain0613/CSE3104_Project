@@ -90,4 +90,12 @@ public class Menu {
 
         title_label.setText("Dashboard");
     }
+
+    public void gotoUserList(Event event) throws IOException, SQLException{
+        UserList userList = new UserList();
+        userList.setData(current_user);
+        userList.start(contentArea);
+
+        title_label.setText("User List");
+    }
 }

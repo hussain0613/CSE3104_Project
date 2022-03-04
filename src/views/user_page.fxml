@@ -3,12 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Profile">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1040.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserPage">
    <children>
       <Label layoutX="245.0" layoutY="80.0" text="Name:">
          <font>
@@ -64,24 +63,6 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-
-      <Label fx:id="password_label" layoutX="245.0" layoutY="500.0" text="Password:" visible="false">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font></Label>
-      <PasswordField fx:id="password_field" editable="false" layoutX="395.0" layoutY="495.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></PasswordField>
-
-      <Label fx:id="confirm_password_label" layoutX="245.0" layoutY="560.0" text="Confirm Password:" visible="false">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font></Label>
-      <PasswordField fx:id="confirm_password_field" editable="false" layoutX="395.0" layoutY="555.0" prefHeight="35.0" prefWidth="250.0" styleClass="textfield" visible="false">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></PasswordField>
 
       <Button fx:id="edit_btn" layoutX="792.0" layoutY="295.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="50.0" prefWidth="120.0" styleClass="primary-button" text="Edit">
         <font>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +16,10 @@ import models.User;
 public class Profile{
     public User current_user;
 
-    public TextField name_field, email_field, username_field, role_field, status_field;
+    public TextField name_field, email_field, username_field;
     public Label msg_label, creation_datetime_label, modification_datetime_label, password_label, confirm_password_label; 
     public PasswordField password_field, confirm_password_field;
+    public ChoiceBox<String> role_choice_box, status_choice_box;
 
     public Button edit_btn, cancel_btn;
 
@@ -32,6 +34,8 @@ public class Profile{
 
         Profile controller = fl.getController();
         controller.setData(current_user);
+        controller.role_choice_box.getItems().addAll("user", "admin");
+        controller.status_choice_box.getItems().addAll("Active", "Banned");
         controller.from_user_obj_to_view();
         
         contentAreaPane.getChildren().removeAll();
@@ -39,13 +43,19 @@ public class Profile{
     }
 
     private void from_user_obj_to_view(){
+        try {
+            current_user.sync(true);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
         name_field.setText(current_user.name);
         email_field.setText(current_user.email);
         username_field.setText(current_user.username);
-        role_field.setText(current_user.role);
-        status_field.setText(current_user.status ? "Active" : "Inactive");
         creation_datetime_label.setText(current_user.get_creation_datetime());
         modification_datetime_label.setText(current_user.get_modification_datetime());
+
+        role_choice_box.setValue(current_user.role);
+        status_choice_box.setValue(current_user.status ? "Active" : "Banned");
 
         password_field.setText(current_user.get_password());
         confirm_password_field.setText(current_user.get_password());
@@ -56,6 +66,17 @@ public class Profile{
         current_user.email = email_field.getText();
         current_user.username = username_field.getText();
         current_user.set_password(password_field.getText());
+
+        if(current_user.role.equals("admin")){
+            current_user.role = role_choice_box.getValue();
+            if(status_choice_box.getValue().equals("Active")){
+                current_user.status = true;
+            }
+            else{
+                current_user.status = false;
+            }
+        }
+
     }
 
     private void set_editability(boolean editable){
@@ -64,8 +85,8 @@ public class Profile{
         username_field.setEditable(editable);
         
         if(current_user.role.equals("admin")){
-            role_field.setEditable(editable);
-            status_field.setEditable(editable);
+            role_choice_box.setDisable(!editable);
+            status_choice_box.setDisable(!editable);
         }
         
         password_label.setVisible(editable);

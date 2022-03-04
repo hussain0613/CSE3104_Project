@@ -37,7 +37,7 @@ public class Signup {
         String confpass = confpass_field.getText();
 
         if(pass.equals(confpass)){
-            User user = new User(name, email, username, pass, "guest", true);
+            User user = new User(name, email, username, pass, "user", true);
             try {
                 user.insert();
 

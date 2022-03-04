@@ -46,6 +46,7 @@ public class ContentUser {
 
     public void insert() throws SQLException, IOException {
         connector = new DBConnector();
+
         String sql = "INSERT INTO \"content-user\" (content_id, user_id, permission, bookmarked) VALUES (" + content_id + ", " + user_id + ", '" + permission + "', '" + bookmarked + "');";
         
         PreparedStatement preparedStatement = connector.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -75,7 +76,8 @@ public class ContentUser {
             resultSet.close();
             connector.close();
         } else {
-            String sql = "update \"content-user\" set content_id=" + content_id + ", user_id=" + user_id + ", permission='" + permission + "', bookmarked='" + bookmarked + "' where id=" + id;
+            String sql = "update \"content-user\" set content_id=" + content_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked=" + bookmarked + " where id=" + id;
+            
             DBConnector connector = new DBConnector();
 
             connector.createStatement().executeUpdate(sql);
@@ -149,14 +151,14 @@ public class ContentUser {
         String sql = "create table \"content-user\"("
             + "id int identity(1,1),"
             + "content_id int,"
-            + "user_id int,"
+            + "\"user_id\" int,"
             + "permission varchar(20),"
             + "bookmarked bit constraint \"df_content-user_bookmarked\" default 0,"
             
             + "constraint \"pk-content-user_id\" primary key (id),"
-            + "constraint \"uq_content-user_content_id_user_id\" unique(content_id, user_id),"
+            + "constraint \"uq_content-user_content_id_user_id\" unique(content_id, \"user_id\"),"
             + "constraint \"fk_content-user_content_id\" foreign key(content_id) references content(id) on delete cascade,"
-            + "constraint \"fk_content-user_user_id\" foreign key(user_id) references \"user\"(id) on delete cascade"
+            + "constraint \"fk_content-user_user_id\" foreign key(\"user_id\") references \"user\"(id) on delete cascade"
         + ");";
 
         
