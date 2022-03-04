@@ -128,6 +128,7 @@ public class ContentPage {
     }
     
     private void add_user_row(ContentUser contentuser, boolean isOwner) {
+        if (contentuser.user_id == current_content.creator_id) return;
         User user;
         try{
             user = User.get_by_id(contentuser.user_id);
@@ -151,6 +152,10 @@ public class ContentPage {
             if(contentuser != null && contentuser.get_id() != -1) {
                 try {
                     contentuser.delete();
+                    if(current_contentuser != null && current_contentuser.get_id() == contentuser.get_id()) {
+                        current_contentuser = null;
+                        bookmark_btn.setText("Add Bookmark");
+                    }
                 } catch (SQLException | IOException e1) {
                     e1.printStackTrace();
                 }
