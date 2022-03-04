@@ -58,40 +58,44 @@ public class CreateContent {
     }
     
     public void createContent(Event event) throws IOException, SQLException{
-        if(title_field.getText().isEmpty() || url_field.getText().isEmpty()){
-            msg_label.setText("Please fill all the required fields");
-            return;
-        }
-
-        Content content = new Content(current_user.get_id(), title_field.getText(), url_field.getText(), alternative_url_field.getText(), type_choice_box.getValue(), details_area.getText(), privacy_choice_box.getValue(), true);
-        
-        try {
-            content.insert();
-            msg_label.setText("Content created successfully");
-        } catch (SQLException e) {
-            if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
-                System.out.println("[!] Content already exists"); // TODO: show a proper message in the gui
+        if(current_user.status){
+            if(title_field.getText().isEmpty() || url_field.getText().isEmpty()){
+                msg_label.setText("Please fill all the required fields");
                 return;
             }
-            else{
-                throw e;
+    
+            Content content = new Content(current_user.get_id(), title_field.getText(), url_field.getText(), alternative_url_field.getText(), type_choice_box.getValue(), details_area.getText(), privacy_choice_box.getValue(), true);
+            
+            try {
+                content.insert();
+                msg_label.setText("Content created successfully");
+            } catch (SQLException e) {
+                if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
+                    System.out.println("[!] Content already exists"); // TODO: show a proper message in the gui
+                    return;
+                }
+                else{
+                    throw e;
+                }
+            }
+    
+            for(String tag : tags){
+                Tag new_tag = null;
+                new_tag = Tag.get_by_tag(tag);
+                ContentTag contentTag = null;
+                if(new_tag != null){
+                    contentTag = new ContentTag(content.get_id(), new_tag.get_id());
+                }else{
+                    new_tag = new Tag(current_user.get_id(), tag);
+                    new_tag.insert();
+                    contentTag = new ContentTag(content.get_id(), new_tag.get_id());
+                }
+                contentTag.insert();
             }
         }
-
-        for(String tag : tags){
-            Tag new_tag = null;
-            new_tag = Tag.get_by_tag(tag);
-            ContentTag contentTag = null;
-            if(new_tag != null){
-                contentTag = new ContentTag(content.get_id(), new_tag.get_id());
-            }else{
-                new_tag = new Tag(current_user.get_id(), tag);
-                new_tag.insert();
-                contentTag = new ContentTag(content.get_id(), new_tag.get_id());
-            }
-            contentTag.insert();
+        else{
+            msg_label.setText("You are banned!");
         }
-        
     }
 
     public void reset(Event event) throws IOException {

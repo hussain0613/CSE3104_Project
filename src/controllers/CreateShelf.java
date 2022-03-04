@@ -56,38 +56,43 @@ public class CreateShelf {
     }
     
     public void createShelf(Event event) throws IOException, SQLException{
-        if(title_field.getText().isEmpty()){
-            msg_label.setText("Please fill all the required fields");
-            return;
-        }
-
-        Shelf shelf = new Shelf(current_user.get_id(), title_field.getText(), details_area.getText(), privacy_choice_box.getValue(), true);
-        
-        try {
-            shelf.insert();
-            msg_label.setText("Shelf created successfully");
-        } catch (SQLException e) {
-            if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
-                System.out.println("[!] Shelf already exists"); // TODO: show a proper message in the gui
+        if(current_user.status){
+            if(title_field.getText().isEmpty()){
+                msg_label.setText("Please fill all the required fields");
                 return;
             }
-            else{
-                throw e;
+    
+            Shelf shelf = new Shelf(current_user.get_id(), title_field.getText(), details_area.getText(), privacy_choice_box.getValue(), true);
+            
+            try {
+                shelf.insert();
+                msg_label.setText("Shelf created successfully");
+            } catch (SQLException e) {
+                if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
+                    System.out.println("[!] Shelf already exists"); // TODO: show a proper message in the gui
+                    return;
+                }
+                else{
+                    throw e;
+                }
+            }
+            
+            for(String tag : tags){
+                Tag new_tag = null;
+                new_tag = Tag.get_by_tag(tag);
+                ShelfTag shelfTag = null;
+                if(new_tag != null){
+                    shelfTag = new ShelfTag(shelf.get_id(), new_tag.get_id());
+                }else{
+                    new_tag = new Tag(current_user.get_id(), tag);
+                    new_tag.insert();
+                    shelfTag = new ShelfTag(shelf.get_id(), new_tag.get_id());
+                }
+                shelfTag.insert();
             }
         }
-        
-        for(String tag : tags){
-            Tag new_tag = null;
-            new_tag = Tag.get_by_tag(tag);
-            ShelfTag shelfTag = null;
-            if(new_tag != null){
-                shelfTag = new ShelfTag(shelf.get_id(), new_tag.get_id());
-            }else{
-                new_tag = new Tag(current_user.get_id(), tag);
-                new_tag.insert();
-                shelfTag = new ShelfTag(shelf.get_id(), new_tag.get_id());
-            }
-            shelfTag.insert();
+        else {
+            msg_label.setText("You are banned!");
         }
     }
 
