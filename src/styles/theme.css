@@ -37,6 +37,19 @@
     -fx-text-fill: white;
 }
 
+.danger-button{
+    -fx-background-radius: 300;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(146, 35, 35);
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );
+}
+
+.danger-button:hover{
+    -fx-background-color: #7a2048;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );
+}
+
 .hyperlink1{
     -fx-text-fill: black;
 }
