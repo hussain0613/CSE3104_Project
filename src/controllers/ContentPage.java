@@ -98,7 +98,7 @@ public class ContentPage {
                 controller.edit_btn.setDisable(false);
             }
             if(current_contentuser.bookmarked){
-                controller.bookmark_btn.setText("Unbookmark");
+                controller.bookmark_btn.setText("Bookmarked");
             }
         }
 
@@ -397,8 +397,15 @@ public class ContentPage {
         }
 
         current_contentuser.bookmarked = !current_contentuser.bookmarked;
-        current_contentuser.update();
-        current_contentuser.sync(true);
+        try{
+            current_contentuser.update();
+            current_contentuser.sync(true);
+        }catch(SQLException e){
+            if(e.getMessage().contains("The result set has no current row")){
+                current_contentuser.insert();
+                current_contentuser.sync(true);
+            }
+        }
 
         if(current_contentuser.bookmarked){
             bookmark_btn.setText("Bookmarked");
