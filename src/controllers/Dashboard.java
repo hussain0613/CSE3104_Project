@@ -60,7 +60,7 @@ public class Dashboard {
         type_col.setCellValueFactory(new PropertyValueFactory<Row, String>("type"));
     }
 
-    public void mouse_click_event_handler(MouseEvent event) throws IOException{
+    public void mouse_click_event_handler(MouseEvent event) throws IOException, SQLException{
         if(event.getClickCount() == 2){
             Row row = table.getSelectionModel().getSelectedItem();
             if(row != null){

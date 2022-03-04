@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -18,23 +19,25 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import models.Content;
 import models.ContentTag;
+import models.ContentUser;
 import models.Tag;
 import models.User;
 
 public class ContentPage {
-    // TODO: title stays dashboard, need to fix this
-
+    
     public TextField title_field, url_field, alternative_url_field, tag_field, username_field;
     public ChoiceBox<String> type_choice_box, privacy_choice_box, permission_choice_box;
     public TextArea details_area;
-    public Label msg_label, tags_label;
+    public Label msg_label;
     public Button edit_btn, save_btn, add_tag_btn;
     public VBox user_list_vbox;
+    public HBox tag_list_hbox;
     public Pane add_tag_pane, user_permission_pane, add_permission_pane;
 
-    User current_user;
+    User current_user, content_owner;
     Content current_content;
     ArrayList <Tag> tags = new ArrayList<Tag>();
+    ArrayList<ContentUser> contentusers = new ArrayList<ContentUser>();
 
     public void setData(User current_user, Content current_content){
         this.current_user = current_user;
@@ -42,38 +45,41 @@ public class ContentPage {
 
         try {
             tags = Tag.get_by_content_id(current_content.get_id());
+            content_owner = User.get_by_id(current_content.creator_id);
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void start(Pane contentAreaPane) throws IOException {
+    public void start(Pane contentAreaPane) throws IOException, SQLException {
         FXMLLoader fl = new FXMLLoader();
 
         Parent root = fl.load(getClass().getResource("/views/content_page.fxml").openStream());
 
         ContentPage controller = fl.getController();
         
-        controller.setData(current_user, current_content);
+        controller.setData(current_user, current_content); 
         controller.from_content_obj_to_view();
         
         controller.type_choice_box.getItems().addAll("Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
-        controller.type_choice_box.getSelectionModel().select(0);
+        controller.type_choice_box.getSelectionModel().select(current_content.type);
         
         controller.privacy_choice_box.getItems().addAll("Private", "Custom", "Public");
-        controller.privacy_choice_box.getSelectionModel().select(0);
+        controller.privacy_choice_box.getSelectionModel().select(current_content.privacy);
         
         controller.permission_choice_box.getItems().addAll("View", "Edit");
         controller.permission_choice_box.getSelectionModel().select(0);
 
+        if(current_content.privacy.equals("Custom") || current_content.privacy.equals("Public")){
+            controller.add_permission_pane.setDisable(false);
+        }
         controller.privacy_choice_box.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-            if(newValue.equals("Custom")){
-                controller.user_permission_pane.setVisible(true);
-                controller.add_permission_pane.setVisible(true);
+            if(newValue.equals("Custom") || newValue.equals("Public")){
+                controller.add_permission_pane.setDisable(false);
             }
             else{
-                controller.user_permission_pane.setVisible(false);
-                controller.add_permission_pane.setVisible(false);
+                controller.add_permission_pane.setDisable(true);
             }
         });
         
@@ -81,6 +87,88 @@ public class ContentPage {
         contentAreaPane.getChildren().setAll(root);
     }
 
+    private void add_user_row(User user, String permission){
+        HBox row = new HBox();
+        row.setSpacing(10);
+        row.getChildren().add(new Label(user.username));
+        row.getChildren().add(new Label("-"));
+        
+        if(permission.equals("Owner")){ 
+            row.getChildren().add(new Label("Owner"));
+        }
+        else{
+            row.getChildren().add(new Label(permission));
+            row.getChildren().add(new Label("-"));
+            Button remove_btn = new Button("Remove");
+            remove_btn.setOnAction(e -> {
+                user_list_vbox.getChildren().remove(row);
+            });
+            row.getChildren().add(remove_btn);
+        }
+        user_list_vbox.getChildren().add(row);
+    }
+    
+    private void add_user_row(ContentUser contentuser, boolean isOwner) {
+        User user;
+        try{
+            user = User.get_by_id(contentuser.user_id);
+        }catch(Exception e){
+            e.printStackTrace();
+            return;
+        }
+
+        HBox row = new HBox();
+        row.setSpacing(10);
+        row.getChildren().add(new Label(user.username));
+        row.getChildren().add(new Label("-"));
+        
+        row.getChildren().add(new Label(contentuser.permission));
+        row.getChildren().add(new Label("-"));
+        Button remove_btn = new Button("Remove");
+        remove_btn.setOnAction(e -> {
+            user_list_vbox.getChildren().remove(row);
+            contentusers.remove(contentuser);
+            
+            if(contentuser != null && contentuser.get_id() != -1) {
+                try {
+                    contentuser.delete();
+                } catch (SQLException | IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        row.getChildren().add(remove_btn);
+        user_list_vbox.getChildren().add(row);
+    }
+
+    public void add_tag_cell(Tag tag) {
+        HBox cell = new HBox();
+        cell.setSpacing(2);
+        Hyperlink tag_hp = new Hyperlink("#" + tag.tag);
+        tag_hp.setOnAction(e -> {
+            msg_label.setText("Tag: Under Construction!");
+        });
+        cell.getChildren().add(tag_hp);
+
+        cell.getChildren().add(new Label("|"));
+
+        Hyperlink remove_btn = new Hyperlink("X");
+        remove_btn.setOnAction(e -> {
+            tags.remove(tag);
+            tag_list_hbox.getChildren().remove(cell);
+            if(tag.get_id() != -1) {
+                try {
+                    tag.delete();
+                } catch (SQLException | IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        cell.getChildren().add(remove_btn);
+
+        tag_list_hbox.getChildren().add(cell);
+    }
+    
     private void from_content_obj_to_view(){
         title_field.setText(current_content.title);
         url_field.setText(current_content.url);
@@ -90,26 +178,16 @@ public class ContentPage {
         type_choice_box.getSelectionModel().select(current_content.type);
         privacy_choice_box.getSelectionModel().select(current_content.privacy);
 
-        tags_label.setText("");
+        tag_list_hbox.getChildren().clear();
         for(int i = 0; i < tags.size(); i++){
-            tags_label.setText(tags_label.getText() + " #" + tags.get(i).tag);
+            add_tag_cell(tags.get(i));
         }
 
-        if(current_content.privacy.equals("Custom")){
-            int arbritrary_user_count = 10;
-            for(int i = 0; i < arbritrary_user_count; i++){
-                HBox row = new HBox();
-                row.setSpacing(10);
-                row.getChildren().add(new Label("User" + i));
-                row.getChildren().add(new Label("-"));
-                row.getChildren().add(new Label("Permission" + i));
-                row.getChildren().add(new Label("-"));
-                Button remove_btn = new Button("Remove");
-                remove_btn.setOnAction(e -> {
-                    user_list_vbox.getChildren().remove(row);
-                });
-                row.getChildren().add(remove_btn);
-                user_list_vbox.getChildren().add(row);
+        user_list_vbox.getChildren().clear();
+        add_user_row(content_owner, "Owner");
+        if(current_content.privacy.equals("Custom") || current_content.privacy.equals("Public")){ 
+            for(int i = 0; i < contentusers.size(); i++){
+                add_user_row(contentusers.get(i), false);        
             }
         }
     }
@@ -140,51 +218,44 @@ public class ContentPage {
         permission_choice_box.setDisable(!editable);
 
         add_tag_pane.setVisible(editable);
-        if(user_permission_pane.isVisible()){
-            add_permission_pane.setVisible(editable);
-        }
+        add_permission_pane.setVisible(editable);
         
         save_btn.setDisable(!editable);
         save_btn.setVisible(editable);
     }
     
-    
-    public void addTag(Event event){
-        // TODO
-        // it would be better to use a list view instead of a text field
-        // may be something like nested hbox,
-        // and needs a rmeove option
 
+    public void addTag(Event event){
+        
         if(tag_field.getText().isEmpty()){
             msg_label.setText("Tag field is empty");
             return;
         }
-        tags_label.setText(tags_label.getText() + " #" + tag_field.getText());
+        
         Tag tag = new Tag();
         tag.tag = tag_field.getText();
+        add_tag_cell(tag);
         tags.add(tag);
         tag_field.clear();
     }
 
     
-    public void addUser(Event event) throws IOException{
-        // TODO:
-        // not complete, it is just a demo
-        // does not actually do anything with the database
-        // need to complete this
-
-        HBox row = new HBox();
-        row.setSpacing(10);
-        row.getChildren().add(new Label(username_field.getText()));
-        row.getChildren().add(new Label("-"));
-        row.getChildren().add(new Label(permission_choice_box.getValue()));
-        row.getChildren().add(new Label("-"));
-        Button remove_btn = new Button("Remove");
-        remove_btn.setOnAction(e -> {
-            user_list_vbox.getChildren().remove(row);
-        });
-        row.getChildren().add(remove_btn);
-        user_list_vbox.getChildren().add(row);
+    public void addUser(Event event) throws IOException, SQLException{
+        User user = null;
+        try{
+            user = User.get_by_username(username_field.getText());
+        }catch(SQLException e){
+            if(e.getMessage().contains("The result set has no current row")){
+                msg_label.setText("User does not exist");
+                return;
+            }else{
+                throw e;
+            }
+        }
+        
+        ContentUser content_user = new ContentUser(current_content.get_id(), user.get_id(), permission_choice_box.getValue(), false);
+        contentusers.add(content_user);
+        add_user_row(user, content_user.permission);
     }
 
     
@@ -250,6 +321,22 @@ public class ContentPage {
                 }
             }
         }
+
+        for(int i = 0; i < contentusers.size(); ++i){
+            ContentUser content_user = contentusers.get(i);
+            if(content_user.get_id() != -1) continue;
+
+            try{
+                content_user.insert();
+            } catch (SQLException e) {
+                if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
+                    msg_label.setText("Can't add same user more than once!");
+                }else{
+                    editButtonOnclick(new ActionEvent());
+                    throw e;
+                }
+            }
+        }
         editButtonOnclick(new ActionEvent());
     }
     
@@ -265,6 +352,7 @@ public class ContentPage {
             edit_btn.setText("Edit");
             current_content.sync(true);
             tags = Tag.get_by_content_id(current_content.get_id());
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
             from_content_obj_to_view();
         }
     }
