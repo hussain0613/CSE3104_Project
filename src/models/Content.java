@@ -170,6 +170,45 @@ public class Content {
         return contents;
     }
 
+    public static ArrayList<Content> get_by_shelf_id(int shelf_id) throws SQLException, IOException{
+        String sql = "select * from \"content\""
+            + " join \"content-shelf\" on \"content\".id=\"content-shelf\".content_id"
+            + " where shelf_id=" + shelf_id + ";";
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Content> contents = from_resultSet_To_Content_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return contents;
+    }
+
+    public static ArrayList<Content> get_bookmarked(int user_id) throws SQLException, IOException{
+        String sql = "select * from \"content\""
+            + " join \"content-user\" on \"content\".id=\"content-user\".content_id"
+            + " where bookmarked=1 and user_id=" + user_id + ";";
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Content> contents = from_resultSet_To_Content_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return contents;
+    }
+
+    public static ArrayList<Content> get_shared(int user_id) throws SQLException, IOException{
+        String sql = "select * from \"content\""
+            + " join \"content-user\" on \"content\".id=\"content-user\".content_id"
+            + " where (permission='view' or permission='edit') and user_id=" + user_id + ";";
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Content> contents = from_resultSet_To_Content_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return contents;
+    }
+
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table content("
