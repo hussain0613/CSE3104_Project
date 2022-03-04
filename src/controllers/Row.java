@@ -10,9 +10,16 @@ import models.Content;
 import models.Shelf;
 
 public class Row {
+    public Content content;
+    public Shelf shelf;
 
-    public Row(){}
+    public Row(){
+        content = null;
+        shelf = null;
+    }
     public Row(Content content){
+        this.content = content;
+        this.shelf = null;
         setTitle(content.title);
         setUrl(content.url);
         setModification_datetime(content.get_modification_datetime());
@@ -20,6 +27,8 @@ public class Row {
     }
 
     public Row(Shelf shelf){
+        this.shelf = shelf;
+        this.content = null;
         setTitle(shelf.title);
         setUrl("-");
         setModification_datetime(shelf.get_modification_datetime());

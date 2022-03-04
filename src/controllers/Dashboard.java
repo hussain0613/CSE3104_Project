@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import models.User;
 import models.Content;
@@ -21,6 +22,8 @@ public class Dashboard {
     public TableView<Row> table;
     public TableColumn<Row, String> title_col, mod_dt_col, url_col, type_col;
 
+    Pane contentArea;
+    
     public void setData(User current_user){
         this.current_user = current_user;
     }
@@ -31,6 +34,7 @@ public class Dashboard {
         Pane root = fl.load(getClass().getResource("/views/dashboard.fxml").openStream());
 
         Dashboard controller = fl.getController();
+        controller.contentArea = contentAreaPane;
         controller.setData(current_user);
         controller.populate_table();
         
@@ -54,6 +58,19 @@ public class Dashboard {
         mod_dt_col.setCellValueFactory(new PropertyValueFactory<Row, String>("modification_datetime"));
         url_col.setCellValueFactory(new PropertyValueFactory<Row, String>("url"));
         type_col.setCellValueFactory(new PropertyValueFactory<Row, String>("type"));
+    }
+
+    public void mouse_click_event_handler(MouseEvent event) throws IOException{
+        if(event.getClickCount() == 2){
+            Row row = table.getSelectionModel().getSelectedItem();
+            if(row != null){
+                if(row.content != null){
+                    ContentPage content_page = new ContentPage();
+                    content_page.setData(current_user, row.content);
+                    content_page.start(contentArea);
+                }
+            }
+        }
     }
 }
 
