@@ -73,8 +73,12 @@ public class Signup {
                 msg_label.setText("Wrong username or password");
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            msg_label.setText(e.getMessage());
+            if(e.getMessage().contains("The result set has no current row")){
+                msg_label.setText("Wrong username or password");
+            }
+            else{
+                msg_label.setText(e.getMessage());
+            }
         }
     }
         
