@@ -6,9 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import utils.DBConnector;
-
 import java.io.IOException;
 
 public class User {
@@ -167,6 +165,37 @@ public class User {
         connector.close();
         return users;
     }
+
+
+    public static ArrayList<User> search(String searchBy, String searchValue, String filterBy, String filterValue) throws SQLException, IOException{
+
+        String sql;
+        if(filterBy.equals("None")){
+            sql = "select * from \"user\" where " + searchBy + " like '%" + searchValue + "%';";
+        }
+        else if(filterBy.equals("Status")){
+            boolean status;
+            if(filterValue.equals("Active")){
+                status = true;
+            }
+            else{
+                status = false;
+            }
+            sql = "select * from \"user\" where " + searchBy + " like '%" + searchValue + "%' and status='" + status + "';";
+        }
+        else{
+            sql = "select * from \"user\" where " + searchBy + " like '%" + searchValue + "%' and role='" + filterValue + "';";
+        }
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<User> users = from_resultSet_To_User_Array(resultSet);
+
+        resultSet.close();
+        connector.close();
+        return users;
+    }
+
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"user\"(" +
