@@ -43,7 +43,7 @@
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Discover">
+                  <Button mnemonicParsing="false" onAction="#gotoDiscover" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Discover">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>

@@ -9,10 +9,10 @@
    <children>
       <TableView fx:id="table" layoutY="60.0" onMouseClicked="#mouse_click_event_handler" prefHeight="600.0" prefWidth="1040.0">
         <columns>
-          <TableColumn fx:id="title_col" prefWidth="231.999966442585" text="Title" />
-          <TableColumn fx:id="mod_dt_col" prefWidth="170.0" text="Modification Date" />
-            <TableColumn fx:id="url_col" prefWidth="498.0" text="URL" />
-            <TableColumn fx:id="type_col" prefWidth="139.0" text="Type" />
+          <TableColumn fx:id="title_col" prefWidth="250" text="Title" />
+          <TableColumn fx:id="mod_dt_col" prefWidth="190.0" text="Modification Date" />
+          <TableColumn fx:id="url_col" prefWidth="450.0" text="URL" />
+          <TableColumn fx:id="type_col" prefWidth="150.0" text="Type" />
         </columns>
       </TableView>
       <ChoiceBox fx:id="category_choice_box" layoutX="445.0" layoutY="20.0" prefWidth="150.0" />

@@ -98,4 +98,12 @@ public class Menu {
 
         title_label.setText("User List");
     }
+
+    public void gotoDiscover(Event event) throws IOException, SQLException{
+        Discover discover = new Discover();
+        discover.setData(current_user, null);
+        discover.start(contentArea);
+
+        title_label.setText("Discover");
+    }
 }
