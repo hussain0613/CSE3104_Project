@@ -170,7 +170,15 @@ public class ContentPage {
         cell.setSpacing(2);
         Hyperlink tag_hp = new Hyperlink("#" + tag.tag);
         tag_hp.setOnAction(e -> {
-            msg_label.setText("Tag: Under Construction!");
+            Discover discover = new Discover();
+            discover.setData(current_user, tag.tag);
+            try {
+                discover.start(contentAreaPane);
+            } catch (IOException | SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            //title_label.setText("Discover");
         });
         cell.getChildren().add(tag_hp);
 

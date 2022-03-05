@@ -57,6 +57,19 @@ public class Discover {
     public void populate_table(boolean allContents) throws SQLException, IOException{
         ArrayList<Content> contents = Content.get_by_creator_id(current_user.get_id());;
         ArrayList<Shelf> shelves = Shelf.get_by_creator_id(current_user.get_id());;
+
+        if(allContents){
+            if(received_tag == null){
+
+            }
+            else{
+                contents = Content.discover_by_tag(received_tag);
+                shelves = Shelf.discover_by_tag(received_tag);
+            }
+        }
+        else{
+
+        }
         
         table.getItems().clear();
         

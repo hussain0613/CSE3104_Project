@@ -152,7 +152,6 @@ public class Shelf {
         return shelves;
     }
 
-
     public static ArrayList<Shelf> get_by_tag(String tag) throws SQLException, IOException{
         String sql = "select * from \"shelf\""
             + " join \"shelf-tag\" on \"shelf\".id=\"shelf-tag\".shelf_id"
@@ -168,6 +167,20 @@ public class Shelf {
         return shelves;
     }
 
+    public static ArrayList<Shelf> discover_by_tag(String tag) throws SQLException, IOException{
+        String sql = "select * from \"shelf\""
+            + " join \"shelf-tag\" on \"shelf\".id=\"shelf-tag\".shelf_id"
+            + " join \"tag\" on \"shelf-tag\".tag_id=\"tag\".id"
+            + " where \"tag\".tag='" + tag + "' and \"shelf\".privacy='public';";
+            
+        
+        DBConnector connector = new DBConnector();
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        ArrayList<Shelf> shelves = from_resultSet_To_Shelf_Array(resultSet);
+        resultSet.close();
+        connector.close();
+        return shelves;
+    }
 
     public static ArrayList<Shelf> get_bookmarked(int user_id) throws SQLException, IOException{
         String sql = "select * from \"shelf\""
@@ -183,7 +196,6 @@ public class Shelf {
         return shelves;
     }
 
-
     public static ArrayList<Shelf> get_shared(int user_id) throws SQLException, IOException{
         String sql = "select * from \"shelf\""
             + " join \"shelf-user\" on \"shelf\".id=\"shelf-user\".shelf_id"
@@ -196,7 +208,6 @@ public class Shelf {
         connector.close();
         return shelves;
     }
-
 
     public static void create_table() throws SQLException, IOException{
         String sql = "create table shelf("
