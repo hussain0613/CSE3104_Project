@@ -82,6 +82,7 @@ public class UserPage{
             try {
                 from_view_to_user_obj();
                 user.update();
+                current_user.sync(true);
                 modification_datetime_label.setText(user.get_modification_datetime());
                 msg_label.setText("User updated successfully");
             } catch (SQLException e) {

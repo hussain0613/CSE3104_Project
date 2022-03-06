@@ -43,11 +43,6 @@ public class Profile{
     }
 
     private void from_user_obj_to_view(){
-        try {
-            current_user.sync(true);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
         name_field.setText(current_user.name);
         email_field.setText(current_user.email);
         username_field.setText(current_user.username);
