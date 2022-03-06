@@ -46,39 +46,65 @@ public class Discover {
         controller.populate_table(true);
 
         controller.search_by_choice_box.getItems().addAll("Title", "Tag");
-        controller.search_by_choice_box.getSelectionModel().select(0);
-        controller.filter_by_choice_box.getItems().addAll("All", "Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
-        controller.filter_by_choice_box.getSelectionModel().select(0);
+        if(received_tag != null){
+            controller.search_by_choice_box.setValue("Tag");
+            controller.search_value_field.setText(received_tag);
+        }
+        else{
+            controller.search_by_choice_box.setValue("Title");
+        }
+        controller.filter_by_choice_box.getItems().addAll("All", "Shelf", "Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
+        controller.filter_by_choice_box.setValue("All");
 
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }
 
     public void populate_table(boolean allContents) throws SQLException, IOException{
-        ArrayList<Content> contents = Content.get_by_creator_id(current_user.get_id());;
-        ArrayList<Shelf> shelves = Shelf.get_by_creator_id(current_user.get_id());;
+        table.getItems().clear();
+
+        ArrayList<Content> contents;
+        ArrayList<Shelf> shelves;
 
         if(allContents){
             if(received_tag == null){
-
+                contents = Content.search("Title", "", "All");
+                shelves = Shelf.search("Title", "");
             }
             else{
-                contents = Content.discover_by_tag(received_tag);
-                shelves = Shelf.discover_by_tag(received_tag);
+                contents = Content.search("Tag", received_tag, "All");
+                shelves = Shelf.search("Tag", received_tag);
             }
+
+            ObservableList<Row> content_rows = Row.from_contents(contents);
+            table.setItems(content_rows);
+            ObservableList<Row> shelf_rows = Row.from_shelves(shelves);
+            table.getItems().addAll(shelf_rows);
         }
         else{
+            if(filter_by_choice_box.getValue().equals("All")){
+                contents = Content.search(search_by_choice_box.getValue(), search_value_field.getText(), "All");
+                shelves = Shelf.search(search_by_choice_box.getValue(), search_value_field.getText());
 
+                ObservableList<Row> content_rows = Row.from_contents(contents);
+                table.setItems(content_rows);
+                ObservableList<Row> shelf_rows = Row.from_shelves(shelves);
+                table.getItems().addAll(shelf_rows);
+            }
+            else if(filter_by_choice_box.getValue().equals("Shelf")){
+                shelves = Shelf.search(search_by_choice_box.getValue(), search_value_field.getText());
+
+                ObservableList<Row> shelf_rows = Row.from_shelves(shelves);
+                table.setItems(shelf_rows);
+            }
+            else{
+                contents = Content.search(search_by_choice_box.getValue(), search_value_field.getText(), filter_by_choice_box.getValue());
+
+                ObservableList<Row> content_rows = Row.from_contents(contents);
+                table.setItems(content_rows);
+            }
         }
         
-        table.getItems().clear();
-        
-        ObservableList<Row> content_rows = Row.from_contents(contents);
-        table.setItems(content_rows);
-
-        ObservableList<Row> shelf_rows = Row.from_shelves(shelves);
-        table.getItems().addAll(shelf_rows);
-
         title_col.setCellValueFactory(new PropertyValueFactory<Row, String>("title"));
         mod_dt_col.setCellValueFactory(new PropertyValueFactory<Row, String>("modification_datetime"));
         url_col.setCellValueFactory(new PropertyValueFactory<Row, String>("url"));
