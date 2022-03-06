@@ -182,7 +182,7 @@ public class ContentPage {
         });
         cell.getChildren().add(tag_hp);
 
-        if(current_content.creator_id == current_user.get_id() || current_contentuser.permission.equals("Edit")){
+        if(current_content.creator_id == current_user.get_id() || (current_contentuser != null && current_contentuser.permission.equals("Edit"))){
             
             cell.getChildren().add(new Label("|"));
 
