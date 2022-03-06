@@ -44,10 +44,12 @@ public class Signup {
                 msg_label.setText("Successfully signed up!");
 
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                msg_label.setText(e.getMessage());
+                if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
+                    System.out.println("[!] Username/Email already exists.");
+                }else{
+                    msg_label.setText(e.getMessage());
+                }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 msg_label.setText(e.getMessage());
             }
         }

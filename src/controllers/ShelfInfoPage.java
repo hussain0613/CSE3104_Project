@@ -451,4 +451,10 @@ public class ShelfInfoPage {
             bookmark_btn.setText("Add Bookmark");
         }
     }
+
+    public void viewContents_button_onclick(Event event) throws IOException, SQLException{
+        ShelfContents shelf_contents_page = new ShelfContents();
+        shelf_contents_page.setData(current_user, current_shelf);
+        shelf_contents_page.start(shelfAreaPane);
+    }
 }

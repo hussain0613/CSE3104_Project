@@ -20,7 +20,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-         <Button layoutX="519.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="secondary-button" text="View Contents" />
+         <Button layoutX="519.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewContents_button_onclick" prefHeight="30.0" prefWidth="140.0" styleClass="secondary-button" text="View Contents" />
          <Button fx:id="bookmark_btn" layoutX="680.0" layoutY="10.0" mnemonicParsing="false" onAction="#bookmarkButtonOnclick" prefHeight="30.0" prefWidth="140.0" styleClass="secondary-button" text="Add Bookmark" />
          <Button fx:id="delete_btn" disable="true" layoutX="850.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="danger-button" text="Delete" visible="false" />
         <Button fx:id="edit_btn" disable="true" layoutX="945.0" layoutY="10.0" mnemonicParsing="false" onAction="#editButtonOnclick" prefHeight="30.0" prefWidth="70.0" styleClass="primary-button" text="Edit" visible="false">
