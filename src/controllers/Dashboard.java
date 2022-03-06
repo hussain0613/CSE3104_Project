@@ -108,6 +108,10 @@ public class Dashboard {
                     ContentPage content_page = new ContentPage();
                     content_page.setData(current_user, row.content);
                     content_page.start(contentArea);
+                }else if(row.shelf != null){
+                    ShelfContents shelf_contents_page = new ShelfContents();
+                    shelf_contents_page.setData(current_user, row.shelf);
+                    shelf_contents_page.start(contentArea);
                 }
             }
         }
