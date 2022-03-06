@@ -327,7 +327,7 @@ public class ContentPage {
             for(int i = 0; i < contentusers.size(); i++){
                 if(contentusers.get(i).user_id != current_user.get_id()) contentusers.get(i).delete();
             }
-        }else if(current_content.privacy.equals("Public")){
+        }else if(current_content.privacy.equals("Custom")){
             contentusers = ContentUser.get_by_content_id(current_content.get_id());
             for(int i = 0; i < contentusers.size(); i++){
                 if(contentusers.get(i).user_id != current_user.get_id() && (contentusers.get(i).permission == null || contentusers.get(i).permission.equals("null"))) 
