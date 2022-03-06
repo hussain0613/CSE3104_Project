@@ -55,6 +55,21 @@ public class ContentPage {
     }
 
     public void start(Pane contentAreaPane) throws IOException, SQLException {
+        if(current_content.creator_id != current_user.get_id() && (
+            current_content.privacy.equals("Private") ||
+            (current_content.privacy.equals("Custom") && (current_contentuser == null || current_contentuser.permission == null || current_contentuser.permission.equals("null"))))
+            ){
+            if(current_contentuser != null){
+                current_contentuser.delete();    
+            }
+            
+            contentAreaPane.getChildren().clear();
+            Dashboard dashboard = new Dashboard();
+            dashboard.setData(current_user);
+            dashboard.start(contentAreaPane);
+            return;
+        }
+
         FXMLLoader fl = new FXMLLoader();
 
         Parent root = fl.load(getClass().getResource("/views/content_page.fxml").openStream());
@@ -107,6 +122,7 @@ public class ContentPage {
     }
 
     private void add_user_row(User user, String permission){
+        if (permission == null || permission.equals("null")) return;
         HBox row = new HBox();
         row.setSpacing(10);
         row.getChildren().add(new Label(user.username));
@@ -114,6 +130,8 @@ public class ContentPage {
         
         if(permission.equals("Owner")){ 
             row.getChildren().add(new Label("Owner"));
+        }else if((user.get_id() == -1 && permission.equals("View") && current_content.privacy.equals("Public"))){
+            row.getChildren().add(new Label("View"));
         }
         else{
             row.getChildren().add(new Label(permission));
@@ -129,6 +147,7 @@ public class ContentPage {
     
     private void add_user_row(ContentUser contentuser, boolean isOwner) {
         if (contentuser.user_id == current_content.creator_id) return;
+        if (contentuser.permission == null || contentuser.permission.equals("null")) return;
         User user;
         try{
             user = User.get_by_id(contentuser.user_id);
@@ -221,6 +240,11 @@ public class ContentPage {
 
         user_list_vbox.getChildren().clear();
         add_user_row(content_owner, "Owner");
+        if(current_content.privacy.equals("Public")){
+            User everyone = new User();
+            everyone.username = "Everyone";
+            add_user_row(everyone, "View");
+        }
         if(current_content.privacy.equals("Custom") || current_content.privacy.equals("Public")){ 
             for(int i = 0; i < contentusers.size(); i++){
                 add_user_row(contentusers.get(i), false);        
@@ -297,6 +321,19 @@ public class ContentPage {
     
     public void saveContent(Event event) throws IOException, SQLException{
         from_view_to_content_obj();
+
+        if(current_content.privacy.equals("Private")){
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
+            for(int i = 0; i < contentusers.size(); i++){
+                if(contentusers.get(i).user_id != current_user.get_id()) contentusers.get(i).delete();
+            }
+        }else if(current_content.privacy.equals("Public")){
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
+            for(int i = 0; i < contentusers.size(); i++){
+                if(contentusers.get(i).user_id != current_user.get_id() && (contentusers.get(i).permission == null || contentusers.get(i).permission.equals("null"))) 
+                    contentusers.get(i).delete();
+            }
+        }
 
         if(title_field.getText().isEmpty() || url_field.getText().isEmpty()){
             msg_label.setText("Please fill all the required fields");
