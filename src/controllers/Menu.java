@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import models.User;
 
 public class Menu {
+    public static Label page_title_label;
+    
     public User current_user;
 
     public Pane contentArea;
@@ -33,6 +35,7 @@ public class Menu {
         controller.setData(current_user);
         controller.from_user_obj_to_view();
         controller.title_label.setText("Dashboard");
+        page_title_label = controller.title_label;
         
         primaryStage.setTitle("Digital Content Organizer");
         Scene scene = new Scene(root);

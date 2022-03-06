@@ -77,6 +77,7 @@ public class ShelfContents {
         }
         controller.populate_table(current_shelf.title + " Contents");
         
+        Menu.page_title_label.setText("Shelf Contents");
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }

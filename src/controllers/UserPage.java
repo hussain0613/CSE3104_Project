@@ -37,6 +37,7 @@ public class UserPage{
         controller.status_choice_box.getItems().addAll("Active", "Banned");
         controller.from_user_obj_to_view();
         
+        Menu.page_title_label.setText("User Information");
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }

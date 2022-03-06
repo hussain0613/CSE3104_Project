@@ -71,6 +71,7 @@ public class AddShelfContents {
         controller.setData(current_user, current_shelf);
         controller.populate_view();
          
+        Menu.page_title_label.setText("Add Contents to Shelf");
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }

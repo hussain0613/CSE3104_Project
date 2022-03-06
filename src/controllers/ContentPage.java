@@ -117,6 +117,7 @@ public class ContentPage {
             }
         }
 
+        Menu.page_title_label.setText("Content Information");
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }

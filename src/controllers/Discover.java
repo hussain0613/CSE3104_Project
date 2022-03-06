@@ -56,6 +56,7 @@ public class Discover {
         controller.filter_by_choice_box.getItems().addAll("All", "Shelf", "Website", "Text", "E-Book", "Image", "Audio", "Video", "Other");
         controller.filter_by_choice_box.setValue("All");
 
+        Menu.page_title_label.setText("Discover");
         contentAreaPane.getChildren().removeAll();
         contentAreaPane.getChildren().setAll(root);
     }

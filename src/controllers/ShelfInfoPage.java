@@ -115,6 +115,7 @@ public class ShelfInfoPage {
             }
         }
 
+        Menu.page_title_label.setText("Shelf Information");
         shelfAreaPane.getChildren().removeAll();
         shelfAreaPane.getChildren().setAll(root);
     }
