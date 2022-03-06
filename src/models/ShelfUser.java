@@ -3,6 +3,7 @@ package models;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import utils.DBConnector;
 
@@ -10,7 +11,7 @@ public class ShelfUser {
     DBConnector connector;
 
     private int id;
-    private int shelf_id, user_id;
+    public int shelf_id, user_id;
     public String permission;
     public boolean bookmarked;
 
@@ -30,6 +31,7 @@ public class ShelfUser {
     }
 
     public ShelfUser(int shelf_id, int user_id, String permission, boolean bookmarked) {
+        id = -1;
         this.shelf_id = shelf_id;
         this.user_id = user_id;
         this.permission = permission;
@@ -42,7 +44,7 @@ public class ShelfUser {
 
     public void insert() throws SQLException, IOException {
         connector = new DBConnector();
-        connector.createStatement().executeUpdate("INSERT INTO \"shelf-user\" (shelf_id, \"user_id\", permission, bookmarked) VALUES (" + shelf_id + ", " + user_id + ", '" + permission + "', " + bookmarked + ");");
+        connector.createStatement().executeUpdate("INSERT INTO \"shelf-user\" (shelf_id, \"user_id\", permission, bookmarked) VALUES (" + shelf_id + ", " + user_id + ", '" + permission + "', '" + bookmarked + "');");
         connector.close();
     }
 
@@ -62,7 +64,7 @@ public class ShelfUser {
             resultSet.close();
             connector.close();
         } else {
-            String sql = "update \"shelf-user\" set shelf_id=" + shelf_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked=" + bookmarked + " where id=" + id;
+            String sql = "update \"shelf-user\" set shelf_id=" + shelf_id + ", \"user_id\"=" + user_id + ", permission='" + permission + "', bookmarked='" + bookmarked + "' where id=" + id;
             DBConnector connector = new DBConnector();
 
             connector.createStatement().executeUpdate(sql);
@@ -96,6 +98,40 @@ public class ShelfUser {
 
     public static ShelfUser get_by_id(int id) throws SQLException, IOException {
         return new ShelfUser(id);
+    }
+
+    public static ShelfUser get_by_unique_constraint(int shelf_id, int user_id) throws SQLException, IOException {
+        String sql = "select * from \"shelf-user\" where shelf_id=" + shelf_id + " and user_id=" + user_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        ShelfUser shelfUser = new ShelfUser();
+        shelfUser.from_resultSet_To_ShelfUser(resultSet);
+
+        resultSet.close();
+        connector.close();
+
+        return shelfUser;
+    }
+
+    public static ArrayList<ShelfUser> get_by_shelf_id(int shelf_id) throws SQLException, IOException {
+        
+        String sql = "select * from \"shelf-user\" where shelf_id=" + shelf_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        
+        ArrayList<ShelfUser> shelfUsers = new ArrayList<ShelfUser>();
+        while(resultSet.next()){
+            ShelfUser shelfUser = new ShelfUser();
+            shelfUser.from_resultSet_To_ShelfUser(resultSet);
+            shelfUsers.add(shelfUser);
+        }
+
+        resultSet.close();
+        connector.close();
+        return shelfUsers;
     }
 
     public static void create_table() throws SQLException, IOException{

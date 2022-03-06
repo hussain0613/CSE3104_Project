@@ -83,6 +83,21 @@ public class ShelfTag {
     }
 
 
+    public static ShelfTag get_by_unique_constraint(int shelf_id, int tag_id) throws SQLException, IOException{
+        String sql = "select * from \"shelf-tag\" where shelf_id=" + shelf_id + " and tag_id=" + tag_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        ShelfTag shelfTag = new ShelfTag();
+        shelfTag.from_resultSet_To_ShelfTag(resultSet);
+
+        resultSet.close();
+        connector.close();
+
+        return shelfTag;
+    }
+
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"shelf-tag\"("
             + "id int identity(1,1),"
