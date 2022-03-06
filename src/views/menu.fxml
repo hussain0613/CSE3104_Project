@@ -31,29 +31,24 @@
    <left>
       <Pane prefHeight="660.0" prefWidth="240.0" styleClass="secondary-color" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="400.0" prefWidth="240.0">
+            <VBox layoutY="50.0" prefHeight="400.0" prefWidth="240.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#gotoDashboard" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Dashboard">
+                  <Button mnemonicParsing="false" onAction="#gotoDashboard" prefHeight="55.0" prefWidth="240.0" styleClass="menu-button" text="Dashboard">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#gotoProfile" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Profile">
+                  <Button mnemonicParsing="false" onAction="#gotoProfile" prefHeight="55.0" prefWidth="240.0" styleClass="menu-button" text="Profile">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#gotoDiscover" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Discover">
+                  <Button mnemonicParsing="false" onAction="#gotoDiscover" prefHeight="55.0" prefWidth="240.0" styleClass="menu-button" text="Discover">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="Reports">
-                     <font>
-                        <Font name="System Bold Italic" size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="userlist_btn" mnemonicParsing="false" onAction="#gotoUserList" prefHeight="50.0" prefWidth="240.0" styleClass="menu-button" text="User List">
+                  <Button fx:id="userlist_btn" mnemonicParsing="false" onAction="#gotoUserList" prefHeight="55.0" prefWidth="240.0" styleClass="menu-button" text="User List">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
