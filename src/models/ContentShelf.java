@@ -82,6 +82,21 @@ public class ContentShelf {
         return new ContentShelf(id);
     }
 
+    public static ContentShelf get_by_unique_constraint(int content_id, int shelf_id) throws SQLException, IOException {
+        String sql = "select * from \"content-shelf\" where content_id=" + content_id + " and shelf_id=" + shelf_id;
+        DBConnector connector = new DBConnector();
+
+        ResultSet resultSet = connector.createStatement().executeQuery(sql);
+        resultSet.next();
+        ContentShelf content_shelf = new ContentShelf();
+        content_shelf.from_resultSet_To_ContentShelf(resultSet);
+
+        resultSet.close();
+        connector.close();
+
+        return content_shelf;
+    }
+
     public static void create_table() throws SQLException, IOException{
         String sql = "create table \"content-shelf\"("
             + "id int identity(1,1),"
