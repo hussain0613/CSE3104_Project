@@ -323,19 +323,6 @@ public class ContentPage {
     public void saveContent(Event event) throws IOException, SQLException{
         from_view_to_content_obj();
 
-        if(current_content.privacy.equals("Private")){
-            contentusers = ContentUser.get_by_content_id(current_content.get_id());
-            for(int i = 0; i < contentusers.size(); i++){
-                if(contentusers.get(i).user_id != current_user.get_id()) contentusers.get(i).delete();
-            }
-        }else if(current_content.privacy.equals("Custom")){
-            contentusers = ContentUser.get_by_content_id(current_content.get_id());
-            for(int i = 0; i < contentusers.size(); i++){
-                if(contentusers.get(i).user_id != current_user.get_id() && (contentusers.get(i).permission == null || contentusers.get(i).permission.equals("null"))) 
-                    contentusers.get(i).delete();
-            }
-        }
-
         if(title_field.getText().isEmpty() || url_field.getText().isEmpty()){
             msg_label.setText("Please fill all the required fields");
             return;
@@ -411,6 +398,20 @@ public class ContentPage {
                 }
             }
         }
+        
+        if(current_content.privacy.equals("Private")){
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
+            for(int i = 0; i < contentusers.size(); i++){
+                if(contentusers.get(i).user_id != content_owner.get_id()) contentusers.get(i).delete();
+            }
+        }else if(current_content.privacy.equals("Custom")){
+            contentusers = ContentUser.get_by_content_id(current_content.get_id());
+            for(int i = 0; i < contentusers.size(); i++){
+                if(contentusers.get(i).user_id != content_owner.get_id() && (contentusers.get(i).permission == null || contentusers.get(i).permission.equals("null"))) 
+                    contentusers.get(i).delete();
+            }
+        }
+
         editButtonOnclick(new ActionEvent());
     }
     

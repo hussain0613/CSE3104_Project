@@ -311,20 +311,6 @@ public class ShelfInfoPage {
     
     public void saveShelf(Event event) throws IOException, SQLException{
         from_view_to_shelf_obj();
-
-        if(current_shelf.privacy.equals("Private")){
-            shelfusers = ShelfUser.get_by_shelf_id(current_shelf.get_id());
-            for(int i = 0; i < shelfusers.size(); i++){
-                if(shelfusers.get(i).user_id != current_user.get_id()) shelfusers.get(i).delete();
-            }
-        }else if(current_shelf.privacy.equals("Custom")){
-            shelfusers = ShelfUser.get_by_shelf_id(current_shelf.get_id());
-            for(int i = 0; i < shelfusers.size(); i++){
-                if(shelfusers.get(i).user_id != current_user.get_id() && (shelfusers.get(i).permission == null || shelfusers.get(i).permission.equals("null"))) 
-                    shelfusers.get(i).delete();
-            }
-        }
-        
         
         try {
             current_shelf.modifier_id = current_user.get_id();
@@ -395,6 +381,20 @@ public class ShelfInfoPage {
                 }
             }
         }
+
+        if(current_shelf.privacy.equals("Private")){
+            shelfusers = ShelfUser.get_by_shelf_id(current_shelf.get_id());
+            for(int i = 0; i < shelfusers.size(); i++){
+                if(shelfusers.get(i).user_id != shelf_owner.get_id()) shelfusers.get(i).delete();
+            }
+        }else if(current_shelf.privacy.equals("Custom")){
+            shelfusers = ShelfUser.get_by_shelf_id(current_shelf.get_id());
+            for(int i = 0; i < shelfusers.size(); i++){
+                if(shelfusers.get(i).user_id != shelf_owner.get_id() && (shelfusers.get(i).permission == null || shelfusers.get(i).permission.equals("null"))) 
+                    shelfusers.get(i).delete();
+            }
+        }
+
         editButtonOnclick(new ActionEvent());
     }
     
