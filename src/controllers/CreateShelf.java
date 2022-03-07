@@ -69,7 +69,7 @@ public class CreateShelf {
                 msg_label.setText("Shelf created successfully");
             } catch (SQLException e) {
                 if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
-                    System.out.println("[!] Shelf already exists"); // TODO: show a proper message in the gui
+                    msg_label.setText("You already have a shelf with this title");
                     return;
                 }
                 else{

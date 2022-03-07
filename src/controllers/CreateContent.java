@@ -71,7 +71,7 @@ public class CreateContent {
                 msg_label.setText("Content created successfully");
             } catch (SQLException e) {
                 if(e.getMessage().contains("Violation of UNIQUE KEY constraint")){
-                    System.out.println("[!] Content already exists"); // TODO: show a proper message in the gui
+                    msg_label.setText("You already have a content with the same URL or Title");
                     return;
                 }
                 else{
