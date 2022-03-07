@@ -198,7 +198,7 @@ public class ContentPage {
                 e1.printStackTrace();
             }
 
-            //title_label.setText("Discover");
+            Menu.page_title_label.setText("Discover");
         });
         cell.getChildren().add(tag_hp);
 
@@ -316,7 +316,7 @@ public class ContentPage {
         
         ContentUser content_user = new ContentUser(current_content.get_id(), user.get_id(), permission_choice_box.getValue(), false);
         contentusers.add(content_user);
-        add_user_row(user, content_user.permission);
+        add_user_row(content_user, false);
     }
 
     

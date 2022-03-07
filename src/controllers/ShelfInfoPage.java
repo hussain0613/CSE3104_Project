@@ -196,7 +196,7 @@ public class ShelfInfoPage {
                 e1.printStackTrace();
             }
 
-            //title_label.setText("Discover");
+            Menu.page_title_label.setText("Discover");
         });
         cell.getChildren().add(tag_hp);
 
@@ -305,7 +305,7 @@ public class ShelfInfoPage {
         
         ShelfUser shelf_user = new ShelfUser(current_shelf.get_id(), user.get_id(), permission_choice_box.getValue(), false);
         shelfusers.add(shelf_user);
-        add_user_row(user, shelf_user.permission);
+        add_user_row(shelf_user, false);
     }
 
     
