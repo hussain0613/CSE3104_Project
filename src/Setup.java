@@ -30,15 +30,15 @@ public class Setup {
     }
 
     public static void drop_tables() throws SQLException, IOException{
+        ContentShelf.drop_table();
+        ContentUser.drop_table();
+        ShelfUser.drop_table();
         ShelfTag.drop_table();
         ContentTag.drop_table();
         Tag.drop_table();
         Shelf.drop_table();
         Content.drop_table();
         User.drop_table();
-        ContentShelf.drop_table();
-        ContentUser.drop_table();
-        ShelfUser.drop_table();
         
         System.out.println("[*] Tables dropped");
     }
